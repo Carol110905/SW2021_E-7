@@ -34,6 +34,14 @@ CREATE TABLE `examen` (
   `Cantidad` int(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+
+Create tabla 'RelacionUE' (
+  'idExamen' int(255) NOT NULL,
+  'idUsuarios' int(255) NOT NULL,
+
+    FOREIGN KEY(idExamen) REFERENCES examen(idExamen),
+    FOREIGN KEY(idUsuarios) REFERENCES usuarios(idUsuario));
+)
 -- --------------------------------------------------------
 
 --
@@ -41,7 +49,7 @@ CREATE TABLE `examen` (
 --
 
 CREATE TABLE `maestros` (
-  `id` int(255) NOT NULL,
+  `idMaestro` int(255) NOT NULL,
   `Username` int(250) NOT NULL,
   `Password` int(250) NOT NULL,
   `Nombre` int(250) NOT NULL
@@ -69,7 +77,7 @@ CREATE TABLE `preguntas` (
 --
 
 CREATE TABLE `usuarios` (
-  `id` int(255) NOT NULL,
+  `idUsuario` int(255) NOT NULL,
   `Username` text NOT NULL,
   `Password` text NOT NULL,
   `Nombre` text NOT NULL
@@ -100,7 +108,7 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(255) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
