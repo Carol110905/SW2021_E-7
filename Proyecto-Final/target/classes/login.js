@@ -1,13 +1,11 @@
 var Acceso = document.getElementById("Ingresar");
 Acceso.addEventListener("click", function(){ 
-    var params = new URLSearchParams();;
-    var usu = document.getElementById("usuario");
-    var pass = document.getElementById("password");
-    params.append("usuario", usu);
-    params.append("password", pass);
+    let usuario = document.getElementById("usuario");
+    let password = document.getElementById("password");
     console.log(usu + pass);
-    axios.get("http://localhost:4567/validar", {
-        usuario: params.get("usuario"), password: params.get("password")
+    axios.get("http://localhost:1234/validar", {
+        usuario: usuario,
+        password: password
     })
     .then(function(rs) {
         console.log(rs.data);
