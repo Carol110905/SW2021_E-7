@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class Conexion {
     private String url = "jdbc:mysql://localhost:3306/proyecto_accesibilidad";
     private String username = "root";
-    private String password = "";
+    private String password = "gA11lEO1";
     private String driverName = "com.mysql.jdbc.Driver";
     private Connection conn = null;
 

@@ -41,6 +41,7 @@ public class App {
                     Map<String, Object> variables = new HashMap<>();
                     IContext context = new Context(rq.raw().getLocale(), variables);
                     String out = ThymeleafUtil.getTemplateEngine().process("Hola", context);
+                    System.out.println("Existe el usuario");
                     return out;
                 } else {
                     System.out.println("No existe el usuario");
