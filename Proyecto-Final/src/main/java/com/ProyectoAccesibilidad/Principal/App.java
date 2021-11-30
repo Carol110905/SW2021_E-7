@@ -8,8 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.ProyectoAccesibilidad.Modelo.Profesor;
-import com.ProyectoAccesibilidad.Modelo.ProfesorDAO;
+import com.ProyectoAccesibilidad.Principal.db.Alumno;
+import com.ProyectoAccesibilidad.Principal.db.AlumnoDAO;
+import com.ProyectoAccesibilidad.Principal.db.Profesor;
+import com.ProyectoAccesibilidad.Principal.db.ProfesorDAO;
 
 import org.thymeleaf.context.Context;
 import org.thymeleaf.context.IContext;
@@ -31,22 +33,41 @@ public class App {
 
         get("/validar", (rq, rs) -> {
             ProfesorDAO pd = new ProfesorDAO();
+            AlumnoDAO ad = new AlumnoDAO();
             Profesor p;
+            Alumno A;
             String usuario = rq.queryParams("usuario");
+            System.out.println(usuario);
             String password = rq.queryParams("password");
             p = pd.BuscarProfesor(usuario);
-            if (p != null) {
-                if (password.equals(String.valueOf(p.getPassword()))){
-                    System.out.println("Si llegue");
-                    Map<String, Object> variables = new HashMap<>();
-                    IContext context = new Context(rq.raw().getLocale(), variables);
-                    String out = ThymeleafUtil.getTemplateEngine().process("Hola", context);
-                    System.out.println("Existe el usuario");
-                    return out;
-                } else {
-                    System.out.println("No existe el usuario");
+            if (p == null) {
+                A = ad.BuscarAlumno(usuario);
+                if(A != null){
+                    if (password.equals(String.valueOf(A.getPassword()))) {
+                        System.out.println("Si llegue");
+                        Map<String, Object> variables = new HashMap<>();
+                        IContext context = new Context(rq.raw().getLocale(), variables);
+                        String out = ThymeleafUtil.getTemplateEngine().process("Hola", context);
+                        System.out.println("Existe el Alumno");
+                        return out;
+                    } else {
+                        System.out.println("No existe el Alumno");
+                    }
                 }
-               
+            } else {
+                if (p != null) {
+                    if (password.equals(String.valueOf(p.getPassword()))) {
+                        System.out.println("Si llegue");
+                        Map<String, Object> variables = new HashMap<>();
+                        IContext context = new Context(rq.raw().getLocale(), variables);
+                        String out = ThymeleafUtil.getTemplateEngine().process("chillaid/index", context);
+                        System.out.println("Existe el Profesor");
+                        return out;
+                    } else {
+                        System.out.println("No existe el Profesor");
+                    }
+
+                }
             }
             return null;
         });
