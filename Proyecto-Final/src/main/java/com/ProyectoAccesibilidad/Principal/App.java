@@ -1,7 +1,6 @@
 package com.ProyectoAccesibilidad.Principal;
 
 import static spark.Spark.*;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -46,8 +45,9 @@ public class App {
                     if (password.equals(String.valueOf(A.getPassword()))) {
                         System.out.println("Si llegue");
                         Map<String, Object> variables = new HashMap<>();
+                        variables.put("Rol", "Alumno");
                         IContext context = new Context(rq.raw().getLocale(), variables);
-                        String out = ThymeleafUtil.getTemplateEngine().process("Hola", context);
+                        String out = ThymeleafUtil.getTemplateEngine().process("index", context);
                         System.out.println("Existe el Alumno");
                         return out;
                     } else {
@@ -59,8 +59,10 @@ public class App {
                     if (password.equals(String.valueOf(p.getPassword()))) {
                         System.out.println("Si llegue");
                         Map<String, Object> variables = new HashMap<>();
+                        variables.put("Rol", "Profesor");
+                        //buscarMaterias(p);
                         IContext context = new Context(rq.raw().getLocale(), variables);
-                        String out = ThymeleafUtil.getTemplateEngine().process("chillaid/index", context);
+                        String out = ThymeleafUtil.getTemplateEngine().process("index", context);
                         System.out.println("Existe el Profesor");
                         return out;
                     } else {
@@ -72,4 +74,11 @@ public class App {
             return null;
         });
     }
+
+
+    /*public Materia buscarMaterias(Profesor p){
+
+    }*/
 }
+
+

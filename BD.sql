@@ -17,3 +17,19 @@ pass text(75) not null,
 Nombre text(75) not null,
 primary key (IdAlumno)
 );
+
+create table if not exists Materia(
+IdMateria int(10) not null auto_increment,
+Nombre text(25) not null,
+IdProfesor int(10) not null,
+primary key (IdMateria),
+FOREIGN KEY (IdProfesor) REFERENCES Profesor(IdProfesor) 
+);
+
+
+create table if not exists cursa(
+IdMateria int(10) not null auto_increment,
+IdAlumno int(10) not null,
+FOREIGN KEY (IdMateria) REFERENCES Materia(IdMateria),
+FOREIGN key (IdAlumno) REFERENCES Alumno(IdAlumno)
+);
