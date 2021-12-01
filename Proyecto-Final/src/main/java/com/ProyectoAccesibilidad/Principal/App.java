@@ -9,6 +9,8 @@ import java.util.Map;
 
 import com.ProyectoAccesibilidad.Principal.db.Alumno;
 import com.ProyectoAccesibilidad.Principal.db.AlumnoDAO;
+import com.ProyectoAccesibilidad.Principal.db.Materia;
+import com.ProyectoAccesibilidad.Principal.db.MateriaDAO;
 import com.ProyectoAccesibilidad.Principal.db.Profesor;
 import com.ProyectoAccesibilidad.Principal.db.ProfesorDAO;
 
@@ -36,14 +38,12 @@ public class App {
             Profesor p;
             Alumno A;
             String usuario = rq.queryParams("usuario");
-            System.out.println(usuario);
             String password = rq.queryParams("password");
             p = pd.BuscarProfesor(usuario);
             if (p == null) {
                 A = ad.BuscarAlumno(usuario);
                 if(A != null){
                     if (password.equals(String.valueOf(A.getPassword()))) {
-                        System.out.println("Si llegue");
                         Map<String, Object> variables = new HashMap<>();
                         variables.put("Rol", "Alumno");
                         IContext context = new Context(rq.raw().getLocale(), variables);
@@ -57,10 +57,13 @@ public class App {
             } else {
                 if (p != null) {
                     if (password.equals(String.valueOf(p.getPassword()))) {
-                        System.out.println("Si llegue");
+                        MateriaDAO md = new MateriaDAO();
+                        List<Materia> materias = new ArrayList<Materia>();
                         Map<String, Object> variables = new HashMap<>();
+                        materias = md.BuscarMateriaProfesor(Integer.parseInt(p.getID()));
                         variables.put("Rol", "Profesor");
-                        //buscarMaterias(p);
+                        variables.put("Profesor", p.getNombre());
+                        variables.put("listaMaterias", materias);
                         IContext context = new Context(rq.raw().getLocale(), variables);
                         String out = ThymeleafUtil.getTemplateEngine().process("index", context);
                         System.out.println("Existe el Profesor");

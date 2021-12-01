@@ -63,7 +63,7 @@ public class MateriaDAO {
             
             while (rs.next()){
                 System.out.println("dentro");
-                Materia m = new Materia(rs.getInt("idAlumno"), rs.getString("Nombre"),  rs.getInt("IdProfesor"));
+                Materia m = new Materia(rs.getInt("IdMateria"), rs.getString("Nombre"),  rs.getInt("IdProfesor"));
                 materias.add(m);
             }
             return materias;
