@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
+
 import com.ProyectoAccesibilidad.Principal.db.Alumno;
 import com.ProyectoAccesibilidad.Principal.db.AlumnoDAO;
 import com.ProyectoAccesibilidad.Principal.db.Materia;
@@ -44,8 +46,14 @@ public class App {
                 A = ad.BuscarAlumno(usuario);
                 if(A != null){
                     if (password.equals(String.valueOf(A.getPassword()))) {
+                        MateriaDAO md = new MateriaDAO();
+                        List<Materia> materias = new ArrayList<Materia>();
                         Map<String, Object> variables = new HashMap<>();
+                        materias = md.BuscarMateriaAlumno(Integer.parseInt(A.getID()));
+                        variables.put("Tipo", false);
                         variables.put("Rol", "Alumno");
+                        variables.put("Nombre", A.getNombre());
+                        variables.put("listaMaterias", materias);
                         IContext context = new Context(rq.raw().getLocale(), variables);
                         String out = ThymeleafUtil.getTemplateEngine().process("index", context);
                         System.out.println("Existe el Alumno");
@@ -61,8 +69,9 @@ public class App {
                         List<Materia> materias = new ArrayList<Materia>();
                         Map<String, Object> variables = new HashMap<>();
                         materias = md.BuscarMateriaProfesor(Integer.parseInt(p.getID()));
+                        variables.put("Tipo", true);
                         variables.put("Rol", "Profesor");
-                        variables.put("Profesor", p.getNombre());
+                        variables.put("Nombre", p.getNombre());
                         variables.put("listaMaterias", materias);
                         IContext context = new Context(rq.raw().getLocale(), variables);
                         String out = ThymeleafUtil.getTemplateEngine().process("index", context);
@@ -75,6 +84,13 @@ public class App {
                 }
             }
             return null;
+        });
+
+        get("/Formulario", (rq, rs) ->{
+            Map<String, Object> variables = new HashMap<>();
+            IContext context = new Context(rq.raw().getLocale(), variables);
+            String out = ThymeleafUtil.getTemplateEngine().process("Formulario", context);
+            return out;
         });
     }
 

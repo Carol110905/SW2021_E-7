@@ -106,33 +106,21 @@ File: Layout CSS
 #testimonials article blockquote::before{top:15px; left:15px; font-size:30px; line-height:30px;}
 
 /* Latest */
-#latest{}
-#latest > li:last-child{margin-bottom:0;}/* Used when elements stack in small viewports */
-#latest article{}
+#latest{width: 1130px;}
+#latest > li:last-child{margin-bottom:0; width: 1130px;}/* Used when elements stack in small viewports */
+#latest article{width: 1130px;}
 #latest article figure{}
 #latest article figure img{}
-#latest article .meta{display:block; margin:0 0 15px 0; padding:5px 10px;}
+#latest article .meta{display:block; margin:0 0 15px 0; padding:5px 10px; }
 #latest article .meta li{display:block; float:left; width:50%; font-size:.8rem;}
 #latest article .meta li:last-child{text-align:right;}
 #latest article .meta li i{margin-right:5px;}
-#latest article .excerpt{display:block; max-width:85%; margin:0 auto; padding:15px 0 15px 15px; border-left:1px solid;}
-#latest article .excerpt time{display:block; margin-bottom:8px; text-transform:uppercase; font-size:.8rem; font-style:normal; line-height:1;}
+#latest article .excerpt{display:block; max-width:85%; align-items: center; ;margin:0 auto; padding:15px 0 15px 15px; border-left:1px solid;}
+#latest article .excerpt .group{ width: 900px; display:block;  align-items: center; margin:0 auto; padding:15px 15px 15px 15px;}
+#latest article .excerpt .group li{display:block; float:left; width:10%; } 
+#latest article .excerpt .group .subgroup li{display:block; float:left; width:50%;} 
+#latest article .excerpt .group textarea{width: 350px; margin: 0 0 0 0;}
 #latest article .excerpt .heading{margin:0; padding:0; font-size:1.2rem;}
-
-/* Comments */
-#comments ul{margin:0 0 40px 0; padding:0; list-style:none;}
-#comments li{margin:0 0 10px 0; padding:15px;}
-#comments .avatar{float:right; margin:0 0 10px 10px; padding:3px; border:1px solid;}
-#comments address{font-weight:bold;}
-#comments time{font-size:smaller;}
-#comments .comcont{display:block; margin:0; padding:0;}
-#comments .comcont p{margin:10px 5px 10px 0; padding:0;}
-
-#comments form{display:block; width:100%;}
-#comments input, #comments textarea{width:100%; padding:10px; border:1px solid;}
-#comments textarea{overflow:auto;}
-#comments div{margin-bottom:15px;}
-#comments input[type="submit"], #comments input[type="reset"]{display:inline-block; width:auto; min-width:150px; margin:0; padding:8px 5px; cursor:pointer;}
 
 /* Sidebar */
 .container .sidebar{}
@@ -140,43 +128,6 @@ File: Layout CSS
 .sidebar .sdb_holder{margin-bottom:50px;}
 .sidebar .sdb_holder:last-child{margin-bottom:0;}
 
-
-/* Contact Details
---------------------------------------------------------------------------------------------------------------- */
-#ctdetails{}
-
-#ctdetails figure > ul{}
-#ctdetails figure > ul li{position:relative; margin:0 0 35px 0; padding:15px 15px 15px 80px; line-height:1;}
-#ctdetails figure > ul li:last-child{margin:0;}/* Used when elements stack in small viewports */
-#ctdetails figure > ul li i{position:absolute; top:15px; left:15px; width:45px; height:45px; line-height:45px; font-size:16px; text-align:center; border-radius:50%;}
-#ctdetails figure > ul li span{display:block; padding:4px 0 0 0;}
-#ctdetails figure > ul li strong{display:block; margin:0 0 8px 0; text-transform:capitalize;}
-
-#ctdetails article{margin-bottom:0;}/* Used when elements stack in small viewports */
-#ctdetails input, #ctdetails button{border:1px solid;}
-#ctdetails input{display:block; width:100%; padding:15px; margin-bottom:20px;}
-#ctdetails button{padding:8px 18px 10px; text-transform:uppercase; font-weight:400; cursor:pointer;}
-
-
-/* Footer
---------------------------------------------------------------------------------------------------------------- */
-#footer{padding:80px 0;}
-
-#footer .heading{margin-bottom:50px; font-size:1.2rem;}
-#footer .logoname{margin-bottom:50px;}
-#footer p + .faico{margin-top:30px;}
-
-#footer .linklist li{display:block; margin-bottom:15px; padding:0 0 15px 0; border-bottom:1px solid;}
-#footer .linklist li:last-child{margin:0; padding:0; border:none;}
-#footer .linklist li::before, #footer .linklist li::after{display:table; content:"";}
-#footer .linklist li, #footer .linklist li::after{clear:both;}
-
-#footer .latestimg{}
-#footer .latestimg > li{display:inline-block; float:left; width:30%; margin:0 0 5% 5%;}
-#footer .latestimg > li:nth-last-child(-n+3){margin-bottom:0;}/* Removes bottom margin from the last three items - margin is restored in the media queries when items stack */
-#footer .latestimg > li:nth-child(3n+1){margin-left:0; clear:left;}/* Removes the need to add class="first" */
-#footer .latestimg > li img{width:100%;}/* Force the image to resize to take the full space - may have to be changed for tablets, depends on personal preference */
-#footer .latestimg > li a.imgover{display:block;}
 
 
 /* Copyright

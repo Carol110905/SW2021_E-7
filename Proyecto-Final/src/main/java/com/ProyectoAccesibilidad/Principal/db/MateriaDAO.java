@@ -63,7 +63,7 @@ public class MateriaDAO {
             
             while (rs.next()){
                 System.out.println("dentro");
-                Materia m = new Materia(rs.getInt("IdMateria"), rs.getString("Nombre"),  rs.getInt("IdProfesor"));
+                Materia m = new Materia(rs.getInt("IdMateria"), rs.getString("Nombre"),  rs.getInt("IdProfesor"), rs.getBoolean("Examen") );
                 materias.add(m);
             }
             return materias;
@@ -73,25 +73,40 @@ public class MateriaDAO {
         return null;
     }
 
-    public List<Materia> BuscarMateriaAlumno(int IdProfesor){
+    public List<Materia> BuscarMateriaAlumno(int IdAlumno){
         List <Materia> materias = new ArrayList<Materia>();
-        int id = IdProfesor;
+        int id = IdAlumno;
         PreparedStatement stm = null;
         ResultSet rs = null;
         Connection conn = null;
         conn = conexion.getConnection();
         System.out.println(conn);
         try{
-            String sql = "SELECT * FROM materia WHERE IdProfesor = ?";
+            String sql = "SELECT IdMateria FROM cursa WHERE IdAlumno = ?";
             stm = conn.prepareStatement(sql);
             stm.setInt(1, id);
             rs = stm.executeQuery();
-            
-    
+
             while (rs.next()){
-                System.out.println("dentro");
-                Materia m = new Materia(rs.getInt("idMateria"), rs.getString("Nombre"),  rs.getInt("IdProfesor"));
-                materias.add(m);
+
+                int IdMateria = rs.getInt("IdMateria");
+                System.out.println(IdMateria);
+
+                PreparedStatement stm2 = null;
+                ResultSet rs2 = null;
+
+                String sql2 = "SELECT * FROM materia WHERE IdMateria = ? and examen = true";
+                stm2 = conn.prepareStatement(sql2);
+                stm2.setInt(1, IdMateria);
+                rs2 = stm2.executeQuery();
+                System.out.println("Hola");
+                if(rs2.next()){
+                    System.out.println("Hola2");
+                    Materia m = new Materia(rs2.getInt("idMateria"), rs2.getString("Nombre"),  rs2.getInt("IdProfesor"), rs2.getBoolean("Examen"));
+                    System.out.println(m);
+                    materias.add(m);            
+                }
+                
             }
             return materias;
         }catch(Exception e){

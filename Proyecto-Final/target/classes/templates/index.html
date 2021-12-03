@@ -48,12 +48,12 @@
       <article>
 
         <h1 class="heading">Proyecto Accesibilidad</h1>
-        <h3><span th:text="${Rol}"> Desconocido </span> <span th:text="${Profesor}"> Anonimo </span> </h3>
+        <h3><span th:text="${Rol}"> Desconocido </span> <span th:text="${Nombre}"> Anonimo </span> </h3>
         <p>Proyecto Creado por:</p>
         <p>Aburto Lara Mauricio</p>
         <p>Pacheco Baizabal Carol Celina</p>
         <p>Garcia Apodaca Joaquin Alberto</p>
-        <footer><a class="btn" href="#">Tristique vehicula</a></footer>
+        <footer><a class="btn" href="#">Prueba</a></footer>
       </article>
       
     </div>
@@ -131,7 +131,7 @@
           <li class="one_third">
             <article> <a href="#"><i class="fas fa-paw"></i></a>
               <h6 class="heading" th:utext="${materias.Nombre}"> Materia sin Nombre</h6>
-              
+              <p> <span th:utext="${materias.Examen}">No se sabe</span> </p>
             </article>
           </li>
       </th:block>
@@ -438,11 +438,11 @@
   
   <a id="backtotop" href="#top"><i class="fas fa-chevron-up"></i></a>
   <!-- JAVASCRIPTS -->
-  <script src="layout/scripts/jquery.min.js"></script>
-  <script src="layout/scripts/jquery.backtotop.js"></script>
-  <script src="layout/scripts/jquery.mobilemenu.js"></script>
+  <script src="templates/layout/scripts/jquery.min.js"></script>
+  <script src="templates/layout/scripts/jquery.backtotop.js"></script>
+  <script src="templates/layout/scripts/jquery.mobilemenu.js"></script>
   
-  <script src="layout/scripts/jquery.easypiechart.min.js"></script>
+  <script src="templates/layout/scripts/jquery.easypiechart.min.js"></script>
   
 </body>
 
