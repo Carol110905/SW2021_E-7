@@ -20,7 +20,7 @@ Licence URI: https://www.os-templates.com/template-terms
 <body id="top">
 
   <div class="wrapper row1">
-  <header id="header" class="hoc clear">
+    <header id="header" class="hoc clear">
       <div id="logo" class="fl_left">
 
         <h1 class="logoname"><a href="index.html">Eminus Prueba<span th:text="${Rol}">Anonimo</span></a></h1>
@@ -56,39 +56,54 @@ Licence URI: https://www.os-templates.com/template-terms
         <p class="nospace font-xs">Profesor <span>Anonimo</span></p>
         <h6 class="heading font-x2">Examen <span>Prueba</span></h6>
       </div>
-      <div>
+      <div id="Preguntass">
         <form name="Pregunta" id="Pregunta">
-        <ul id="latest" class="nospace group">
-          <li class="one_third first">
-            <article><a class="imgover" href="#"><img src="images/demo/348x261.png" alt=""></a>
-              <ul class="nospace meta clear">
-                <li><i class="fas fa-user"></i> <a href="#">Pregunta</a></li>
-                <li><i class="fas fa-comments"></i> <a href="#">Notas</a></li>
-              </ul>
-              <div class="excerpt">
-                <ul class="group">
-                  <div class="subgroup">
-                  <li>
-                    <textarea name="Ponga Su Pregunta" id="Pregunta" cols="30" rows="2">Pregunta sin titulo</textarea>
-                  </li>
-                </div>
-                  <li class="subgroup2">
-                    <input type="radio" name="Abierta" id="RadioAbierta" onclick="PreguntaAbierta()"> Abierta
-                  </li>
-                  <li class="subgroup3">
-                    <input type="radio" name="Cerrada" id="RadioCerrada" onclick="PreguntaCerrada()"> Cerrada
-                  </li>
+          <ul id="latest" class="nospace group">
+            <li class="one_third first">
+              <article><a class="imgover" href="#"><img src="images/demo/348x261.png" alt=""></a>
+                <ul class="nospace meta clear">
+                  <li><i class="fas fa-user"></i> <a href="#">Pregunta</a></li>
+                  <li><i class="fas fa-comments"></i> <a href="#">Notas</a></li>
                 </ul>
-              </div>
-              <div class="excerpt">
-               <p>Hola como estas?</p>
-              </div>
+                <div class="excerpt">
+                  <ul class="group">
+                    <div class="subgroup">
+                      <li>
+                        <textarea name="Ponga Su Pregunta" id="Pregunta" cols="30"
+                          rows="2">Pregunta sin titulo</textarea>
+                      </li>
+                    </div>
+                    <li class="subgroup2">
+                      <input type="radio" name="Abierta" id="RadioAbierta" onclick="PreguntaAbierta()"> Abierta
+                    </li>
+                    <li class="subgroup3">
+                      <input type="radio" name="Cerrada" id="RadioCerrada" onclick="PreguntaCerrada()"> Cerrada
+
+                    </li>
+                  </ul>
+                </div>
+                <div class="excerpt" id="Botones">
+                  <form id="Botoness">
+                    <ul class="group">
+                      <li>
+                        <div id="btnAgregarMayor1">
+                        <button id="btnAgregar1" type="button" onclick="Agregar()">Aceptar</button>
+                      </div>
+                      </li>
+                      <li>
+                        <button type="button" onclick="Quitar()"> Quitar</button>
+                      </li>
+                    </ul>
+                  </form>
+
+                </div>
 
 
-            </article>
-          </li>
-        </ul>
-      </form>
+              </article>
+            </li>
+          </ul>
+
+        </form>
       </div>
     </section>
   </div>
