@@ -122,6 +122,7 @@ File: Layout CSS
 #latest article .excerpt .group textarea{width: 350px; margin: 0 0 0 0;}
 #latest article .excerpt .heading{margin:0; padding:0; font-size:1.2rem;}
 #latest article .excerpt .Botones button{margin: 5px 5px 5px 5px;}
+#ArticulosMaterias article .BotonesExamen button{display: block; margin: 5px 5px 5px 5px; align-items: center; padding:7px 15px 7px 15px; }
 
 /* Sidebar */
 .container .sidebar{}

@@ -1,7 +1,7 @@
-var NoPreguntas = 1;
+var NoPreguntas = 2;
 let CkAbierta = document.getElementById("RadioAbierta").checked;
 let CkCerrada = document.getElementById("RadioCerrada").checked;
-function PreguntaAbierta() {
+function PreguntaAbierta(NumeroAsk) {
     let prueba2 = document.getElementById("RadioAbierta").checked;
     console.log(NoPreguntas);
     if (CkAbierta == false && CkCerrada == false) {
@@ -14,7 +14,7 @@ function PreguntaAbierta() {
     if (CkAbierta == false && CkCerrada == true) {
         NoPreguntas--;
         var e = document.getElementById("Pregunta");
-        var e_eliminar = document.getElementById("Preguntas" + NoPreguntas);
+        var e_eliminar = document.getElementById("Preguntas" + NumeroAsk);
         var throwawayNode = e.removeChild(e_eliminar);
         $("#RadioCerrada").prop('checked', false);
         $('#Pregunta').append("<div class='excerpt' id='Preguntas" + NoPreguntas + "'><p>Hola como estas?</p></div>");
@@ -25,7 +25,7 @@ function PreguntaAbierta() {
 
 }
 
-function PreguntaCerrada() {
+function PreguntaCerrada(NumeroAsk) {
     let prueba2 = document.getElementById("RadioCerrada").checked;
     console.log(NoPreguntas);
     if (CkCerrada == false && CkAbierta == false) {
@@ -38,7 +38,7 @@ function PreguntaCerrada() {
     if (CkCerrada == false && CkAbierta == true) {
         NoPreguntas--;
         var e = document.getElementById("Pregunta");
-        var e_eliminar = document.getElementById("Preguntas" + NoPreguntas);
+        var e_eliminar = document.getElementById("Preguntas" + NumeroAsk);
         var throwawayNode = e.removeChild(e_eliminar);
         $("#RadioAbierta").prop('checked', false);
         $('#Pregunta').append("<div class='excerpt' id='Preguntas" + NoPreguntas + "'><p>Hola ya soy otro</p></div>");

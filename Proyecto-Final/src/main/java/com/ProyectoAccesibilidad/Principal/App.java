@@ -92,6 +92,17 @@ public class App {
             String out = ThymeleafUtil.getTemplateEngine().process("Formulario", context);
             return out;
         });
+
+        get("/crearExamen", (rq, rs) ->{
+            String m = rq.queryParams("materias");
+            System.out.println(m);
+            Map<String, Object> variables = new HashMap<>();
+            variables.put("Nombre", m);
+            
+            IContext context = new Context(rq.raw().getLocale(), variables);
+            String out = ThymeleafUtil.getTemplateEngine().process("Formulario", context);
+            return out;
+        });
     }
 
 
