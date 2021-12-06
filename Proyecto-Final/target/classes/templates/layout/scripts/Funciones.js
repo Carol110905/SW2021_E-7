@@ -1,9 +1,8 @@
-var NoPreguntas = 2;
+var NoPreguntas = 1;
 let CkAbierta = document.getElementById("RadioAbierta").checked;
 let CkCerrada = document.getElementById("RadioCerrada").checked;
-function PreguntaAbierta(NumeroAsk) {
+function PreguntaAbierta() {
     let prueba2 = document.getElementById("RadioAbierta").checked;
-    console.log(NoPreguntas);
     if (CkAbierta == false && CkCerrada == false) {
         $('#Pregunta').append("<div class='excerpt' id='Preguntas" + NoPreguntas + "'><p>Hola como estas?</p></div>");
         $("#RadioCerrada").prop('checked', false);
@@ -14,7 +13,8 @@ function PreguntaAbierta(NumeroAsk) {
     if (CkAbierta == false && CkCerrada == true) {
         NoPreguntas--;
         var e = document.getElementById("Pregunta");
-        var e_eliminar = document.getElementById("Preguntas" + NumeroAsk);
+        var e_eliminar = document.getElementById("Preguntas" + NoPreguntas);
+        alert(e_eliminar);
         var throwawayNode = e.removeChild(e_eliminar);
         $("#RadioCerrada").prop('checked', false);
         $('#Pregunta').append("<div class='excerpt' id='Preguntas" + NoPreguntas + "'><p>Hola como estas?</p></div>");
@@ -25,11 +25,11 @@ function PreguntaAbierta(NumeroAsk) {
 
 }
 
-function PreguntaCerrada(NumeroAsk) {
+function PreguntaCerrada() {
     let prueba2 = document.getElementById("RadioCerrada").checked;
     console.log(NoPreguntas);
     if (CkCerrada == false && CkAbierta == false) {
-        $('#latest').append("<div class='excerpt' id='Preguntas" + NoPreguntas + "'>     </div>");
+        $('#Pregunta').append("<div class='excerpt' id='Preguntas" + NoPreguntas + "'><p>Hola como estas?</p></div>");
         $("#RadioAbierta").prop('checked', false);
         CkCerrada = prueba2;
         CkAbierta = false;
@@ -37,8 +37,9 @@ function PreguntaCerrada(NumeroAsk) {
     }
     if (CkCerrada == false && CkAbierta == true) {
         NoPreguntas--;
+        console.log(NoPreguntas);
         var e = document.getElementById("Pregunta");
-        var e_eliminar = document.getElementById("Preguntas" + NumeroAsk);
+        var e_eliminar = document.getElementById("Preguntas" + NoPreguntas);
         var throwawayNode = e.removeChild(e_eliminar);
         $("#RadioAbierta").prop('checked', false);
         $('#Pregunta').append("<div class='excerpt' id='Preguntas" + NoPreguntas + "'><p>Hola ya soy otro</p></div>");

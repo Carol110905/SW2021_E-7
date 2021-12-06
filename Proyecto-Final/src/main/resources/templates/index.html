@@ -66,7 +66,7 @@
               <form action="/crearExamen" method="get">
               <article> <a href="#"><i
                     class="fas fa-paw"></i></a>
-                <h6 class="heading" th:utext="${materias.Nombre}"> Materia sin Nombre</h6>
+                <h6  value="Titulo" class="heading" th:utext="${materias.Nombre}"> Materia sin Nombre</h6>
                 <div id="BotonesExamen" class="BotonesExamen">
                 <button title="CrearExamen" id="CrearExamen" th:data-valor="${materias.Examen}" th:data-id="${materias.Nombre}"
                 onclick="enviarMateria(this.getAttribute('data-valor') ,this.getAttribute('data-id'))">Crear Examen</button>
