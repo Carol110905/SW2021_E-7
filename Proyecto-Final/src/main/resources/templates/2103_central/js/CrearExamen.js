@@ -1,9 +1,14 @@
 var NoPreguntas = 1;
+
+function GuardarExamen(){
+    let Pregunta
+}
+
 function PreguntaAbierta(num){
     let CkAbierta = document.getElementById("RadioAbierta" + num).checked;
     let CkCerrada = document.getElementById("RadioCerrada" + num).checked;
     let existe = document.getElementById("ElemntosPreguntas" + (num));
-    alert(CkAbierta + ' ' +CkCerrada + ' ' + existe);
+
     if(existe != null){
         if (CkAbierta == true && CkCerrada == true) {
 

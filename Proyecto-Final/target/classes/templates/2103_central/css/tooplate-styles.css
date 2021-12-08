@@ -115,6 +115,29 @@ button:focus {
   background: #f2f2f2;
 }
 
+.tm-box-5-2 {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  padding-left: 25px;
+  padding-right: 25px;
+  width: 1200px;
+  min-height: 75px;
+  background: #f2f2f2;
+}
+
+.tm-box-5-2 li{
+  display:block; 
+  float:left;
+  width: 50%;
+}
+.tm-box-5-2 li .btn{
+  display:block; 
+  float:left;
+  width: 80%;
+}
+
 
 .tm-box-5 li{
   display:block; 
