@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Central HTML Template</title>
+    <!--
+
+    Template 2103 Central
+
+	http://www.tooplate.com/view/2103-central
+
+    -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
+    <!-- Google web font "Open Sans" -->
+    <link rel="stylesheet" href="/templates/2103_central/font-awesome-4.5.0/css/font-awesome.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/templates/2103_central/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="/templates/2103_central/css/tooplate-style.css">
+    <!-- tooplate style -->
+
+    <script>
+        var renderPage = true;
+
+        if (navigator.userAgent.indexOf('MSIE') !== -1
+            || navigator.appVersion.indexOf('Trident/') > 0) {
+            /* Microsoft Internet Explorer detected in. */
+            alert("Please view this in a modern browser such as Chrome or Microsoft Edge.");
+            renderPage = false;
+        }
+    </script>
+
+</head>
+
+<body>
+    <!-- Loader -->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
+    <div class="container">
+        <section class="tm-section-head" id="top">
+            <header id="header" class="text-center tm-text-gray">
+                <h1>EMINUS</h1>
+                <p> <span th:text="${Rol}"> Rol</span></p>
+                <p> <span th:text="${Nombre}">Anonimo</span> </p>
+            </header>
+
+            <nav class="navbar narbar-light">
+                <a class="navbar-brand tm-text-gray" href="#">
+                    Menu
+                </a>
+                <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse"
+                    data-target="#mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon">
+                        <i class="fa fa-navicon tm-fa-toggler-icon"></i>
+                    </span>
+                </button>
+                <div id="mainNav" class="collapse navbar-collapse tm-bg-white">
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a class="nav-link tm-text-gray" href="#top">Home
+                                <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link tm-text-gray" href="#/templates/2103_central/tm-section-2">Info</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link tm-text-gray" href="#tm-section-6">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="navbar navbar-default navbar-fixed-top">
+                <a href="/index.html" class="navbar-brand"></a>
+                <botton class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mydropdown">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </botton>
+
+            </div>
+
+            <div class="collapse navbar-collapse" id="mydropdown">
+
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#">Perfil</a>
+                    </li>
+                    <li>
+                        <a href="#">Agregar Materias</a>
+                    </li>
+                    <li>
+                        <a href="#">Eliminar Materias</a>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+
+
+        <section class="tm-section-2 tm-section-mb" id="tm-section-2">
+            <div class="row">
+                <div class="col-xl-4 col-lg-4 col-md-6 mb-lg-0 mb-md-5 mb-5 pr-md-5">
+                    <header class="text-center">
+                        <i class="fa fa-4x fa-power-off pl-5 pb-5 pr-5 pt-2"></i>
+                    </header>
+
+                    <h2>Lorem ipsum dolor</h2>
+                    <p>Central Template is provided by <a href="https://www.facebook.com/tooplate"
+                            target="_blank">Tooplate</a>. Vestibulum sit amet tortor velit.
+                        Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus
+                        placerat
+                        malesuada. </p>
+
+                    <a href="#tm-section-3" class="btn tm-btn-pad-2 float-right">Learn More</a>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-6 mb-lg-0 mb-md-5 mb-5 pr-md-5">
+                    <header class="text-center">
+                        <i class="fa fa-4x fa-bolt pl-5 pb-5 pr-5 pt-2"></i>
+                    </header>
+                    <h2>Lorem ipsum dolor</h2>
+                    <p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor
+                        velit.
+                        Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis volutpat lacus
+                        placerat
+                        malesuada.
+                    </p>
+
+                    <a href="#tm-section-4" class="btn tm-btn-pad-2 float-right">Learn More</a>
+                </div>
+
+                <div class="col-xl-4 col-lg-4 col-md-12">
+                    <h2>Nulla maximus hendrerit</h2>
+                    <p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet tortor
+                        velit.</p>
+                    <p>Maecenas feugiat ex purus, quis volutpat lacus placerat malesuada, iaculis est.</p>
+                    <p>+ Curabitur a massa malesuada, ullamcorper nisi tempus.</p>
+                    <p>+ Maecenas ultricies magna sed suscipit pulvinar.</p>
+                    <p>+ Nulla malesuada elit nec nisi aliquet pretium.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="tm-section-3 tm-section-mb" id="tm-section-3">
+            <div class="row">
+                <div class="col-md-6 tm-mb-sm-4 tm-2col-l">
+                    <div class="image">
+                        <img src="/templates/2103_central/img/tm-img-1.jpg" class="img-fluid" />
+                    </div>
+                    <div class="tm-box-3">
+                        <h2>Lorem ipsum dolor</h2>
+                        <p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet
+                            tortor
+                            velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis
+                            volutpat
+                            lacus placerat malesuada.</p>
+                        <div class="text-center">
+                            <a href="#tm-section-5" class="btn btn-big">Details</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 tm-2col-r">
+                    <div class="image">
+                        <img src="/templates/2103_central/img/tm-img-2.jpg" class="img-fluid" />
+                    </div>
+                    <div class="tm-box-3">
+                        <header>
+                            <h2>Vestibulum sit amet</h2>
+                        </header>
+                        <p> Cras aliquet urna ut sapien tincidunt, quis malesuada elit facilisis. Vestibulum sit amet
+                            tortor
+                            velit. Nam elementum nibh a libero pharetra elementum. Maecenas feugiat ex purus, quis
+                            volutpat
+                            lacus placerat malesuada.</p>
+                        <div class="text-center">
+                            <a href="#tm-section-5" class="btn btn-big">Details</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="tm-section-4 tm-section-mb" id="tm-section-4">
+            <div class="row">
+
+            </div>
+        </section>
+
+        <section class="tm-section-5" id="tm-section-5">
+
+            <div class="row">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="image fit">
+                        <img src="/templates/2103_central/img/tm-sc4-img-1.jpg" class="img-fluid">
+                    </div>
+                </div>
+
+                <div class="col-lg-8 col-md-12 col-sm-12 pl-lg-0">
+                    <div th:each="materias : ${listaMaterias}" class="media tm-media">
+                        <img src="/templates/2103_central/img/sc4-img-2.jpg" class="img-responsive tm-media-img">
+                        <div class="media-body tm-box-5" th:switch="${Rol}">
+                            <form action="/crearExamen" method="get">
+                                <h2> <span th:utext="${materias.Nombre}"> Examen Desconocido</span></h2>
+                                <div th:case="Profesor" class="media-body tm-box-5" id="BotonesExamen">
+                                    <button class="btn" title="CrearExamen" id="CrearExamen" th:data-valor="${materias.Examen}"
+                                        th:data-id="${materias.Nombre}"
+                                        onclick="enviarMateria(this.getAttribute('data-valor') ,this.getAttribute('data-id'))">Crear
+                                        Examen</button>
+                                </div>
+
+                                <div th:case="Alumno">
+                                    <div th:switch="${materias.Examen}">
+                                        <div th:case="true" class="media-body tm-box-5">
+                                            <p>Examen Creado</p>
+                                            <a onclick="crear()" class="btn tm-btn-pad-2 float-right">Crear Examen</a>
+                                            <!--#tm-section-3 -->
+                                        </div>
+                                        <div th:case="false">
+                                            <button title="CrearExamen" id="CrearExamen"
+                                                th:data-valor="${materias.Examen}" th:data-id="${materias.Nombre}"
+                                                onclick="enviarMateria(this.getAttribute('data-valor') ,this.getAttribute('data-id'))">Crear
+                                                Examen</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <footer class="mt-5">
+            <p class="text-center">Copyright © 2018 Your Company Name - Design: Tooplate</p>
+        </footer>
+    </div>
+
+    <!-- load JS files -->
+    <script type="text/javascript" src="/templates/2103_central/js/jquery-1.11.3.min.js"></script>
+    <script src="/templates/2103_central/js/popper.min.js"></script>
+    <!-- https://popper.js.org/ -->
+    <script src="/templates/2103_central/js/bootstrap.min.js"></script>
+    <!-- https://getbootstrap.com/ -->
+    <script type="text/javascript" src="/templates/2103_central/js/slick/slick.min.js"></script>
+    <!-- Slick Carousel -->
+    <script type="text/javascript" src="/templates/2103_central/js/indexs.js"></script>
+
+    <script>
+        function setCarousel() {
+            var slider = $('.tm-img-slider');
+
+            if (slider.hasClass('slick-initialized')) {
+                slider.slick('destroy');
+            }
+
+            if ($(window).width() > 991) {
+                // Slick carousel
+                slider.slick({
+                    autoplay: true,
+                    fade: true,
+                    speed: 800,
+                    infinite: true,
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                });
+            } else {
+                slider.slick({
+                    autoplay: true,
+                    fade: true,
+                    speed: 800,
+                    infinite: true,
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                });
+            }
+        }
+
+
+        $(document).ready(function () {
+            if (renderPage) {
+                $('body').addClass('loaded');
+            }
+
+            setCarousel();
+
+            $(window).resize(function () {
+                setCarousel();
+            });
+
+            // Close menu after link click
+            $('.nav-link').click(function () {
+                $('#mainNav').removeClass('show');
+            });
+
+            // https://css-tricks.com/snippets/jquery/smooth-scrolling/
+            // Select all links with hashes
+            $('a[href*="#"]')
+                // Remove links that don't actually link to anything
+                .not('[href="#"]')
+                .not('[href="#0"]')
+                .click(function (event) {
+                    // On-page links
+                    if (
+                        location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
+                        &&
+                        location.hostname == this.hostname
+                    ) {
+                        // Figure out element to scroll to
+                        var target = $(this.hash);
+                        target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                        // Does a scroll target exist?
+                        if (target.length) {
+                            // Only prevent default if animation is actually gonna happen
+                            event.preventDefault();
+                            $('html, body').animate({
+                                scrollTop: target.offset().top + 1
+                            }, 1000, function () {
+                                // Callback after animation
+                                // Must change focus!
+                                var $target = $(target);
+                                $target.focus();
+                                if ($target.is(":focus")) { // Checking if the target was focused
+                                    return false;
+                                } else {
+                                    $target.attr('tabindex', '-1'); // Adding tabindex for elements not focusable
+                                    $target.focus(); // Set focus again
+                                };
+                            });
+                        }
+                    }
+                });
+        });
+    </script>
+    <script src="templates/2103_central/js/indexs.js"> </script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</body>
+
+</html>

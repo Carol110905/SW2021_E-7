@@ -55,7 +55,7 @@ public class App {
                         variables.put("Nombre", A.getNombre());
                         variables.put("listaMaterias", materias);
                         IContext context = new Context(rq.raw().getLocale(), variables);
-                        String out = ThymeleafUtil.getTemplateEngine().process("index", context);
+                        String out = ThymeleafUtil.getTemplateEngine().process("2103_central/index", context);
                         System.out.println("Existe el Alumno");
                         return out;
                     } else {
@@ -74,7 +74,7 @@ public class App {
                         variables.put("Nombre", p.getNombre());
                         variables.put("listaMaterias", materias);
                         IContext context = new Context(rq.raw().getLocale(), variables);
-                        String out = ThymeleafUtil.getTemplateEngine().process("index", context);
+                        String out = ThymeleafUtil.getTemplateEngine().process("2103_central/index", context);
                         System.out.println("Existe el Profesor");
                         return out;
                     } else {
@@ -89,18 +89,18 @@ public class App {
         get("/Formulario", (rq, rs) ->{
             Map<String, Object> variables = new HashMap<>();
             IContext context = new Context(rq.raw().getLocale(), variables);
-            String out = ThymeleafUtil.getTemplateEngine().process("Formulario", context);
+            String out = ThymeleafUtil.getTemplateEngine().process("2103_central/CrearExamen", context);
             return out;
         });
 
         get("/crearExamen", (rq, rs) ->{
-            String m = rq.queryParams("materias");
+            String m = rq.queryParams("materia");
             System.out.println(m);
             Map<String, Object> variables = new HashMap<>();
             variables.put("Nombre", m);
             
             IContext context = new Context(rq.raw().getLocale(), variables);
-            String out = ThymeleafUtil.getTemplateEngine().process("Formulario", context);
+            String out = ThymeleafUtil.getTemplateEngine().process("2103_central/CrearExamen", context);
             return out;
         });
     }
