@@ -15,7 +15,6 @@ public class Conexion {
         try {
             Class.forName(driverName);
             conn = DriverManager.getConnection(url, username, password);
-            System.out.println(conn);
         } catch (SQLException e) {
             System.out.println(e);
         } catch (ClassNotFoundException e) {

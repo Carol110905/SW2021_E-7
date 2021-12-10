@@ -1,19 +1,17 @@
 function enviarMateria(Examen, materia) {
-    let Examenes = Examen;
-    let materias = materia;
-    alert(materias);
-    alert(Examenes);
-    console.log(Examenes)
-    if (Examenes == "false") {
-        axios.get("http://localhost:1234/crearExamen", {
-            materias: materia,
-        })
+    var parametros;
+    var url;
+    parametros.append('materia', materia)
+    url = "http://localhost:1234/crearExamen" + parametros;
+    alert(url);
+    /*if (Examenes == "false") {
+        axios.get(, parametros)
             .then(function (rs) {
                 console.log(rs.data);
             })
             .catch(function (error) {
                 console.log(error);
             });
-    }
+    }*/
 };
 

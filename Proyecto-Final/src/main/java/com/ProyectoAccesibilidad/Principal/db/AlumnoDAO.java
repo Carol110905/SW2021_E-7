@@ -54,7 +54,6 @@ public class AlumnoDAO {
         ResultSet rs = null;
         Connection conn = null;
         conn = conexion.getConnection();
-        System.out.println(conn);
         try{
             String sql = "SELECT * FROM alumno WHERE username = ?";
             stm = conn.prepareStatement(sql);
@@ -64,9 +63,7 @@ public class AlumnoDAO {
             //rs = stm.executeQuery(sql);
 
             while (rs.next()){
-                System.out.println("dentro");
                 Alumno a = new Alumno(rs.getString("idAlumno"), rs.getString("Username"), rs.getString("pass"), rs.getString("Nombre"));
-                System.out.println("********************************" + a.getNombre() + "********************************");
                 return a;
             }
             return null;

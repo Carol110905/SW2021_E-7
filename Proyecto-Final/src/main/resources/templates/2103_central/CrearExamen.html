@@ -47,7 +47,7 @@
     <div class="container">
         <section class="tm-section-head" id="top">
             <header id="header" class="text-center tm-text-gray">
-                <h1>Materia <span>Desconocida</span> </h1>
+                <h1>Materia <span th:utext="${Nombre}">Desconocida</span> </h1>
                 <p>Creacion De Examen</p>
             </header>
 
@@ -114,12 +114,12 @@
         <section class="tm-section-5" id="tm-section-5">
             <div class="row">
 
-
+                <form id="InformacionExamen" action="">
                 <div id="Preguntas" class="Preguntas">
                     <!---->
                     <div id="0" class="media tm-media">
                         <div class="media-body tm-box-5">
-                            <h2>Pregunta 1 </h2>
+                            <h2>¿Cual es la Pregunta? </h2>
                             <textarea name="Ponga Su Pregunta" id="txtPregunta0" cols="30" rows="2"
                                 placeholder="Pregunta sin titulo"></textarea>
                             <ul>
@@ -152,11 +152,12 @@
                     </div>
                     <!---->
                 </div>
+            </form>
             </div>
             <div class="media-body tm-box-5-2" id="BotonesConfirmar">
                 <ul>
                     <li>
-                <button class="btn" type="button" onclick="ConfirmarExamen()">Confirmar</button>
+                <button class="btn" type="button" onclick="GuardarExamen()">Confirmar</button>
             </li>
             <li>
                 <button class="btn" type="button" onclick="CancelarExamen()">Cancelar</button>

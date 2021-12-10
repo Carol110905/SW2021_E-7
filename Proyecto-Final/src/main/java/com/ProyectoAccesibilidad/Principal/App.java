@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import com.google.gson.*;
 
 
 
@@ -25,6 +26,7 @@ import org.thymeleaf.context.IContext;
  *
  */
 public class App {
+    private static Gson gson = new Gson();
     public static void main(String[] args) {
         port(1234);
         staticFiles.location("/");
@@ -56,10 +58,8 @@ public class App {
                         variables.put("listaMaterias", materias);
                         IContext context = new Context(rq.raw().getLocale(), variables);
                         String out = ThymeleafUtil.getTemplateEngine().process("2103_central/index", context);
-                        System.out.println("Existe el Alumno");
                         return out;
                     } else {
-                        System.out.println("No existe el Alumno");
                     }
                 }
             } else {
@@ -75,10 +75,8 @@ public class App {
                         variables.put("listaMaterias", materias);
                         IContext context = new Context(rq.raw().getLocale(), variables);
                         String out = ThymeleafUtil.getTemplateEngine().process("2103_central/index", context);
-                        System.out.println("Existe el Profesor");
                         return out;
                     } else {
-                        System.out.println("No existe el Profesor");
                     }
 
                 }
@@ -95,13 +93,17 @@ public class App {
 
         get("/crearExamen", (rq, rs) ->{
             String m = rq.queryParams("materia");
-            System.out.println(m);
             Map<String, Object> variables = new HashMap<>();
             variables.put("Nombre", m);
             
             IContext context = new Context(rq.raw().getLocale(), variables);
             String out = ThymeleafUtil.getTemplateEngine().process("2103_central/CrearExamen", context);
             return out;
+        });
+
+        get("/GuardarExamen", (rq,rs)->{
+            
+            return null;
         });
     }
 
