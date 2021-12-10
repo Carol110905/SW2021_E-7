@@ -29,7 +29,26 @@ function PreguntaAbierta(num) {
         ArrayCerrada[num] = 'false';
         ActualizarRadios();
     }
+    var radioButTrat = document.getElementsByName("#RadioCerrada");
+//Lista
 
+    for (var i=0; i<radioButTrat.length; i++) {
+
+    if (radioButTrat[i].checked == false) {
+
+        ("input[name='#RadioCerrada']:checked").val(); 
+
+    }
+
+    }
+    for (var i=0; i<radioButTrat.length; i++) {
+
+        if (radioButTrat[i].checked == true) {
+    
+            ("input[name='#RadioAbierta']:checked").val(); 
+    
+        }
+        }
 }
 
 
@@ -61,7 +80,7 @@ function PreguntaCerrada(num) {
 
 
 function Agregar(num) {
-    console.clear();
+   
     let CkAbierta = document.getElementById("RadioAbierta" + num).checked;
     let CkCerrada = document.getElementById("RadioCerrada" + num).checked;
     if (CkAbierta == false && CkCerrada == false) {
@@ -104,7 +123,7 @@ function ActualizarRadios(num) {
 }
 
 function GuardarExamen() {
-    var informacion;
+    var informacion="";
     for (var i = 0; i <= NoPreguntas; i++) {
         if (document.getElementById(i) != null) {
             informacion += "Pregunta" + i + ": " + document.getElementById("txtPregunta" + i).value + "\n";
@@ -126,6 +145,17 @@ function GuardarExamen() {
 
     var formData = new FormData();
     formData.append("Informacion", informacion)
+    if (document.getElementById(i) != null) {
+        if (ArrayAbiertas[i] == "true") {
+            formData.append("FRespuesta1("+i+") ", document.getElementById("FRespuesta1("+i+")"));
+        } else if (ArrayCerrada[i] == "true") {
+            formData.append("FRespuesta1("+i+") ", document.getElementById("FRespuesta1("+i+")"));
+            formData.append("FRespuesta2("+i+") ", document.getElementById("FRespuesta2("+i+")"));
+            formData.append("FRespuesta3("+i+") ", document.getElementById("FRespuesta3("+i+")"));
+            formData.append("FRespuesta4("+i+") ", document.getElementById("FRespuesta4("+i+")"));
+        }
+
+    }
     axios.post("http://localhost:1234/Escribirtxt", formData, {
         headers: {
             "Content-Type": "multipart/form-data"
@@ -172,7 +202,7 @@ function AgregarCerradas(num) {
 function AgregarAbierta(num) {
     var preguntaAbierta = '<div id="ElemntosPreguntas' + num + '" class="ElementosPreguntasAbiertas"> <ul> <li> <h3>Respuesta Correcta:</h3>' +
         '</li><li><textarea name="RespuestaCorrecta(' + num + ')" id="RespuestaCorrecta(' + num + ')" cols="30" rows="2"placeholder="Ponga la Respuesta"></textarea></li>' +
-        '</ul></div>';
+        '</ul><input type="file" name=FRespuesta1(' + num + ') id="FRespuesta1(' + num + ')"></div>';
     return preguntaAbierta;
 }
 
