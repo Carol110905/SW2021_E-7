@@ -7,8 +7,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.google.gson.*;
+import java.io.FileWriter;
 
-
+import spark.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+import java.nio.file.*;
+import static spark.Spark.*;
+import static spark.debug.DebugScreen.*;
 
 import com.ProyectoAccesibilidad.Principal.db.Alumno;
 import com.ProyectoAccesibilidad.Principal.db.AlumnoDAO;
@@ -27,6 +34,7 @@ import org.thymeleaf.context.IContext;
  */
 public class App {
     private static Gson gson = new Gson();
+    File uploadDir = new File("upload");
     public static void main(String[] args) {
         port(1234);
         staticFiles.location("/");
@@ -105,12 +113,35 @@ public class App {
             
             return null;
         });
+
+        post("/Escribirtxt", (req, res) -> {
+            FileWriter fichero = null;
+            String linea = req.body();
+            System.out.println(linea);
+            try {
+                System.out.println(linea);
+                fichero = new FileWriter("fichero_escritura.txt");
+                fichero.write(linea + "\n");    
+                fichero.close();
+                System.out.println(linea);
+            } catch (Exception ex) {
+                System.out.println("Mensaje de la excepción: " + ex.getMessage());
+            }
+            
+            return null;
+            /*Path tempFile = Files.createTempFile(uploadDir.toPath(), "", "");
+    
+            req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+    
+            try (InputStream input = req.raw().getPart("videoGrabado").getInputStream()) { // getPart needs to use same "name" as input field in form
+                Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
+            }
+    
+            logInfo(req, tempFile);
+            return "<h1>You uploaded this image:<h1><img src='" + tempFile.getFileName() + "'>";*/
+    
+        });
     }
 
-
-    /*public Materia buscarMaterias(Profesor p){
-
-    }*/
+    
 }
-
-

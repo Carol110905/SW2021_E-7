@@ -105,26 +105,34 @@ function ActualizarRadios(num) {
 
 function GuardarExamen() {
     var informacion;
-    for(var i=0;i<=NoPreguntas;i++){
+    for (var i = 0; i <= NoPreguntas; i++) {
         if (document.getElementById(i) != null) {
-            informacion += "Pregunta"+i+": "+ document.getElementById("txtPregunta"+i).value + "\n";
-            if(ArrayAbiertas[i] == "true"){
-                informacion += "Tipo"+i+": Abierta"+"\n";
-                informacion += "RespuestaCorrecta"+i+": "+document.getElementById("RespuestaCorrecta("+i+")").value+"\n";
-            }else if(ArrayCerrada[i] == "true"){
-                informacion += "Tipo"+i+": Cerrada"+"\n";
-                informacion += "RespuestaCorrecta"+i+": "+document.getElementById("RespuestaCorrecta("+i+")").value+"\n";
-                informacion += "Respuesta1("+i+"): "+document.getElementById("Respuesta1("+i+")").value+"\n";
-                informacion += "Respuesta2("+i+"): "+document.getElementById("Respuesta2("+i+")").value+"\n";
-                informacion += "Respuesta3("+i+"): "+document.getElementById("Respuesta3("+i+")").value+"\n";
-                informacion += "Respuesta4("+i+"): "+document.getElementById("Respuesta4("+i+")").value+"\n";
+            informacion += "Pregunta" + i + ": " + document.getElementById("txtPregunta" + i).value + "\n";
+            if (ArrayAbiertas[i] == "true") {
+                informacion += "Tipo" + i + ": Abierta" + "\n";
+                informacion += "RespuestaCorrecta" + i + ": " + document.getElementById("RespuestaCorrecta(" + i + ")").value + "\n";
+            } else if (ArrayCerrada[i] == "true") {
+                informacion += "Tipo" + i + ": Cerrada" + "\n";
+                informacion += "RespuestaCorrecta" + i + ": " + document.getElementById("RespuestaCorrecta(" + i + ")").value + "\n";
+                informacion += "Respuesta1(" + i + "): " + document.getElementById("Respuesta1(" + i + ")").value + "\n";
+                informacion += "Respuesta2(" + i + "): " + document.getElementById("Respuesta2(" + i + ")").value + "\n";
+                informacion += "Respuesta3(" + i + "): " + document.getElementById("Respuesta3(" + i + ")").value + "\n";
+                informacion += "Respuesta4(" + i + "): " + document.getElementById("Respuesta4(" + i + ")").value + "\n";
             }
 
-        }  
+        }
     }
     console.log(informacion);
-    writeToFile(informacion);
+
+    var formData = new FormData();
+    formData.append("Informacion", informacion)
+    axios.post("http://localhost:1234/Escribirtxt", formData, {
+        headers: {
+            "Content-Type": "multipart/form-data"
+        }
+    })
 }
+
 
 function writeToFile(data) {
     var fso = new ActiveXObject("Scripting.FileSystemObject");
