@@ -114,56 +114,56 @@
         <section class="tm-section-5" id="tm-section-5">
             <div class="row">
 
-                <form id="InformacionExamen" action="">
-                <div id="Preguntas" class="Preguntas">
-                    <!---->
-                    <div id="0" class="media tm-media">
-                        <div class="media-body tm-box-5">
-                            <h2> ¿Cual es la Pregunta? </h2>
-                            <input type="file" name="" id=""><br>
-                            <textarea name="Ponga Su Pregunta" id="txtPregunta0" cols="30" rows="2"
-                                placeholder="Pregunta sin titulo"></textarea>
-                            <ul>
-                                <li>
-                                    <input type="radio" name="Abierta" id="RadioAbierta0"
-                                        onclick="PreguntaAbierta(0)">Abierta
-                                </li>
-                                <li>
-                                    <input type="radio" name="Cerrada" id="RadioCerrada0"
-                                        onclick="PreguntaCerrada(0)">Cerrada
-                                </li>
-                            </ul>
-
-                            <div id="TiposPreguntas0">                           
-                                
-                            </div>
-                            <div id="BotonesPreguntas0" class="media-body tm-box-5-1">
-
+                <form id="InformacionExamen" name="InformacionExamen" action="">
+                    <div id="Preguntas" class="Preguntas">
+                        <!---->
+                        <div id="0" class="media tm-media">
+                            <div class="media-body tm-box-5">
+                                <h2> ¿Cual es la Pregunta? </h2>
+                                <textarea name="txtPregunta0" id="txtPregunta0" cols="30" rows="2"
+                                    placeholder="Pregunta sin titulo"></textarea>
+                                <input type="file" name="FPregunta0" id="FPregunta0"><br>
                                 <ul>
                                     <li>
-                                        <button class="btn" id="btnAgregar0" type="button"
-                                            onclick="Agregar(0)">Aceptar</button>
+                                        <input type="radio" name="RadioAbierta0" id="RadioAbierta0"
+                                            onclick="PreguntaAbierta(0)">Abierta
                                     </li>
                                     <li>
-                                        <button class="btn" type="button" onclick="Quitar(null)">Quitar</button>
+                                        <input type="radio" name="RadioCerrada0" id="RadioCerrada0"
+                                            onclick="PreguntaCerrada(0)">Cerrada
                                     </li>
                                 </ul>
+
+                                <div id="TiposPreguntas0">
+
+                                </div>
+                                <div id="BotonesPreguntas0" class="media-body tm-box-5-1">
+
+                                    <ul>
+                                        <li>
+                                            <button class="btn" id="btnAgregar0" type="button"
+                                                onclick="Agregar(0)">Aceptar</button>
+                                        </li>
+                                        <li>
+                                            <button class="btn" type="button" onclick="Quitar(null)">Quitar</button>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
+                        <!---->
                     </div>
-                    <!---->
-                </div>
-            </form>
+                </form>
             </div>
             <div class="media-body tm-box-5-2" id="BotonesConfirmar">
                 <ul>
                     <li>
-                <button class="btn" type="button" onclick="GuardarExamen('')">Confirmar</button>
-            </li>
-            <li>
-                <button class="btn" type="button" onclick="CancelarExamen()">Cancelar</button>
-            </li>
-            </ul>
+                        <button class="btn" type="button" onclick="GuardarExamen('')">Confirmar</button>
+                    </li>
+                    <li>
+                        <button class="btn" type="button" onclick="CancelarExamen()">Cancelar</button>
+                    </li>
+                </ul>
             </div>
         </section>
 
@@ -180,8 +180,7 @@
     <!-- https://getbootstrap.com/ -->
     <script type="text/javascript" src="/templates/2103_central/slick/slick.min.js"></script>
     <!-- Slick Carousel -->
-    <script type="text/javascript" src="/templates/2103_central/js/CrearExamen.js"> </script>
-    <script type="text/javascript" src="/templates/2103_central/js/Camara.js"> </script>
+
 
     <script>
         function setCarousel() {
@@ -268,8 +267,12 @@
                 });
         });
     </script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 
 </body>
+
+<script type="text/javascript" src="/templates/2103_central/js/CrearExamen.js"> </script>
+<script type="text/javascript" src="/templates/2103_central/js/Camara.js"> </script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
 </html>

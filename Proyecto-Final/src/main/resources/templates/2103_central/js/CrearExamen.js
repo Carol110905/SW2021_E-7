@@ -30,25 +30,25 @@ function PreguntaAbierta(num) {
         ActualizarRadios();
     }
     var radioButTrat = document.getElementsByName("#RadioCerrada");
-//Lista
+    //Lista
 
-    for (var i=0; i<radioButTrat.length; i++) {
+    for (var i = 0; i < radioButTrat.length; i++) {
 
-    if (radioButTrat[i].checked == false) {
+        if (radioButTrat[i].checked == false) {
 
-        ("input[name='#RadioCerrada']:checked").val(); 
+            ("input[name='#RadioCerrada']:checked").val();
+
+        }
 
     }
-
-    }
-    for (var i=0; i<radioButTrat.length; i++) {
+    for (var i = 0; i < radioButTrat.length; i++) {
 
         if (radioButTrat[i].checked == true) {
-    
-            ("input[name='#RadioAbierta']:checked").val(); 
-    
+
+            ("input[name='#RadioAbierta']:checked").val();
+
         }
-        }
+    }
 }
 
 
@@ -80,7 +80,7 @@ function PreguntaCerrada(num) {
 
 
 function Agregar(num) {
-   
+
     let CkAbierta = document.getElementById("RadioAbierta" + num).checked;
     let CkCerrada = document.getElementById("RadioCerrada" + num).checked;
     if (CkAbierta == false && CkCerrada == false) {
@@ -123,29 +123,51 @@ function ActualizarRadios(num) {
 }
 
 function GuardarExamen() {
-    var informacion="";
-    for (var i = 0; i <= NoPreguntas; i++) {
-        if (document.getElementById(i) != null) {
-            informacion += "Pregunta" + i + ": " + document.getElementById("txtPregunta" + i).value + "\n";
-            if (ArrayAbiertas[i] == "true") {
-                informacion += "Tipo" + i + ": Abierta" + "\n";
-                informacion += "RespuestaCorrecta" + i + ": " + document.getElementById("RespuestaCorrecta(" + i + ")").value + "\n";
-            } else if (ArrayCerrada[i] == "true") {
-                informacion += "Tipo" + i + ": Cerrada" + "\n";
-                informacion += "RespuestaCorrecta" + i + ": " + document.getElementById("RespuestaCorrecta(" + i + ")").value + "\n";
-                informacion += "Respuesta1(" + i + "): " + document.getElementById("Respuesta1(" + i + ")").value + "\n";
-                informacion += "Respuesta2(" + i + "): " + document.getElementById("Respuesta2(" + i + ")").value + "\n";
-                informacion += "Respuesta3(" + i + "): " + document.getElementById("Respuesta3(" + i + ")").value + "\n";
-                informacion += "Respuesta4(" + i + "): " + document.getElementById("Respuesta4(" + i + ")").value + "\n";
-            }
-
+    var formData = new FormData();
+    formData.append("NoPreguntas", NoPreguntas);
+    for(var i=0; i<NoPreguntas;i++){
+        var txtPregunta = 'txtPregunta'+ i;
+        var pregunta =  document.getElementById(txtPregunta).value;
+        formData.append("Pregunta"+i, pregunta);
+        var documente = document.querySelector('#FPregunta'+i)
+        formData.append("FilePregunta"+i , documente.files[0]);
+        
+        if(ArrayAbiertas[i]=="true"){
+            formData.append("Tipo","Abierta");
+            formData.append("RespuestaCorrecta("+i+")", document.getElementById("RespuestaCorrecta("+i+")"));
+            formData.append("FileRespuestaCorrecta"+i, document.getElementById("FRespuesta1("+i+")"));
+        }
+        if(ArrayCerrada[i]=="true"){
+            formData.append("Tipo","Cerrada");
+            formData.append("RespuestaCorrecta("+i+")", document.getElementById("RespuestaCorrecta("+i+")"));
+            formData.append("FRespuestaC"+i, document.getElementById("FRespuestaC"+i));
+            formData.append("Opcion1("+i+")", document.getElementById("Respuesta1("+i+")"));
+            formData.append("FOpcion1("+i+")", document.getElementById("FRespuesta1("+i+")"));
+            formData.append("Opcion2("+i+")", document.getElementById("Respuesta2("+i+")"));
+            formData.append("FOpcion2("+i+")", document.getElementById("FRespuesta2("+i+")"));
+            formData.append("Opcion3("+i+")", document.getElementById("Respuesta3("+i+")"));
+            formData.append("FOpcion3("+i+")", document.getElementById("FRespuesta3("+i+")"));
+            formData.append("Opcion4("+i+")", document.getElementById("Respuesta4("+i+")"));
+            formData.append("FOpcion4("+i+")", document.getElementById("FRespuesta4("+i+")"));
         }
     }
-    console.log(informacion);
+    console.log(formData);
 
-    var formData = new FormData();
-    formData.append("Informacion", informacion)
-    if (document.getElementById(i) != null) {
+    axios({
+        method: 'post',
+        url: 'http://localhost:1234/Escribirtxt',
+        data: formData,
+        headers: {'Content-Type': 'multipart/form-data'}
+    })
+    .then(function (response) {
+        console.log(response);
+    })
+    .catch(function (error) {
+        console.log(error);
+    });
+
+
+    /*if (document.getElementById(i) != null) {
         if (ArrayAbiertas[i] == "true") {
             formData.append("FRespuesta1("+i+") ", document.getElementById("FRespuesta1("+i+")"));
         } else if (ArrayCerrada[i] == "true") {
@@ -155,20 +177,7 @@ function GuardarExamen() {
             formData.append("FRespuesta4("+i+") ", document.getElementById("FRespuesta4("+i+")"));
         }
 
-    }
-    axios.post("http://localhost:1234/Escribirtxt", formData, {
-        headers: {
-            "Content-Type": "multipart/form-data"
-        }
-    })
-}
-
-
-function writeToFile(data) {
-    var fso = new ActiveXObject("Scripting.FileSystemObject");
-    var fh = fso.OpenTextFile("data.txt", 8);
-    fh.WriteLine(data.id + ',' + data.content);
-    fh.Close();
+    }*/
 }
 
 function Quitar(num) {
@@ -179,9 +188,9 @@ function Quitar(num) {
 }
 
 function actualizarplantilla() {
-    var plantillapregunta = '<div id="' + NoPreguntas + '" class="media tm-media"><div class="media-body tm-box-5"><h2>¿Cual es la Pregunta?</h2><textarea name="Ponga Su Pregunta" id="txtPregunta' + NoPreguntas + '" cols="30" rows="2"' +
-        'placeholder="Pregunta sin titulo"></textarea><ul><li><input type="radio" name="Abierta" id="RadioAbierta' + NoPreguntas + '" onclick="PreguntaAbierta(' + NoPreguntas + ')">Abierta</li>' +
-        '<li><input type="radio" name="Cerrada" id="RadioCerrada' + NoPreguntas + '" onclick="PreguntaCerrada(' + NoPreguntas + ')">Cerrada</li></ul><div id="TiposPreguntas' + NoPreguntas + '">' +
+    var plantillapregunta = '<div id="' + NoPreguntas + '" class="media tm-media"><div class="media-body tm-box-5"><h2>¿Cual es la Pregunta?</h2><textarea name="txtPregunta' + NoPreguntas + '" id="txtPregunta' + NoPreguntas + '" cols="30" rows="2"' +
+        'placeholder="Pregunta sin titulo"></textarea>  <input type="file" name="FPregunta'+NoPreguntas+'" id="FPregunta'+NoPreguntas+'"><br><ul><li><input type="radio" name="RadioAbierta' + NoPreguntas + '" id="RadioAbierta' + NoPreguntas + '" onclick="PreguntaAbierta(' + NoPreguntas + ')">Abierta</li>' +
+        '<li><input type="radio" name="RadioCerrada' + NoPreguntas + '" id="RadioCerrada' + NoPreguntas + '" onclick="PreguntaCerrada(' + NoPreguntas + ')">Cerrada</li></ul><div id="TiposPreguntas' + NoPreguntas + '">' +
         '</div><div id="BotonesPreguntas' + NoPreguntas + '" class="media-body tm-box-5-1"><ul><li><button class="btn" id="btnAgregar' + NoPreguntas + '" type="button" onclick="Agregar(' + NoPreguntas + ')">Aceptar</button>' +
         '</li><li><button class="btn" type="button" onclick="Quitar(' + NoPreguntas + ')">Quitar</button></li></ul></div></div></div>';
     NoPreguntas++;
@@ -190,7 +199,7 @@ function actualizarplantilla() {
 
 function AgregarCerradas(num) {
     var preguntasCerradas = '<div id="ElemntosPreguntas' + num + '" class="ElementosPreguntasCerradas"><ul><li><h3>Respuesta Correcta:</h3></li><li><textarea name="RespuestaCorrecta(' + num + ')" id="RespuestaCorrecta(' + num + ')" cols="30" rows="2" ' +
-        'placeholder="Ponga la Respuesta Correcta"></textarea></li></ul><ul><li><h3>Opcion 1:</h3></li><li><textarea name="Respuesta1(' + num + ')" id="Respuesta1(' + num + ')" cols="30" rows="2"' +
+        'placeholder="Ponga la Respuesta Correcta"></textarea> <input type="file" name="FRespuestaC'+num+'" id="FRespuestaC'+num+'"></li></ul><br><ul><li><h3>Opcion 1:</h3></li><li><textarea name="Respuesta1(' + num + ')" id="Respuesta1(' + num + ')" cols="30" rows="2"' +
         'placeholder="Ponga la Respuesta"></textarea></li></ul><ul><li><input type="file" name=FRespuesta1(' + num + ') id="FRespuesta1(' + num + ')"> </li></ul><ul><li><h3>Opcion 2:</h3>' +
         '</li><li><textarea name="Respuesta2(' + num + ')" id="Respuesta2(' + num + ')" cols="30" rows="2"placeholder="Ponga la Respuesta"></textarea></li></ul><ul><li><input type="file" name=FRespuesta2(' + num + ') id="FRespuesta2(' + num + ')"> ' +
         '</ul><ul><li><h3>Opcion 3:</h3></li><li><textarea name="Respuesta3(' + num + ')" id="Respuesta3(' + num + ')" cols="30" rows="2"placeholder="Ponga la Respuesta"></textarea>' +
