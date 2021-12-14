@@ -12,6 +12,7 @@ import spark.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
 import java.io.*;
+import java.net.FileNameMap;
 import java.nio.file.*;
 import static spark.Spark.*;
 import static spark.debug.DebugScreen.*;
@@ -125,81 +126,62 @@ public class App {
 
         post("/Escribirtxt", (req, res) -> {
             req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
-            int NoPreguntas = Integer
-                    .parseInt(convertInputStreamToString(req.raw().getPart("NoPreguntas").getInputStream()));
-            System.out.println(NoPreguntas);
+            int NoPreguntas = Integer.parseInt(convertInputStreamToString(req.raw().getPart("NoPreguntas").getInputStream()));
+            String nombre = convertInputStreamToString(req.raw().getPart("Examen").getInputStream());
+            System.out.println("Examen: " + nombre + " con :" + NoPreguntas + " preguntas");
+
             for (int i = 0; i < NoPreguntas; i++) {
                 String Pregunta = convertInputStreamToString(req.raw().getPart("Pregunta" + i).getInputStream());
-                System.out.println(Pregunta);
+                String fileName = "FilePregunta" + i;
+                guardarVideo(req, fileName, nombre);
 
-                req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
-                Part uf = req.raw().getPart("FilePregunta" + i);
-                System.out.println(uf);
-
-                File uploadDir = new File("upload");
-                uploadDir.mkdir();
-
-                Path tempFile = Files.createTempFile(uploadDir.toPath(), "", "");
-                req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
-                try (InputStream input = req.raw().getPart("FilePregunta" + i).getInputStream()) {
-                    Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
+                String Tipo = convertInputStreamToString(req.raw().getPart("Tipo" + i).getInputStream());
+                if (Tipo.equals("Abierta")) {
+                    String RespuestaC = convertInputStreamToString(req.raw().getPart("RespuestaCorrecta-" + i).getInputStream());
+                    fileName = "FRespuestaC" + i;
+                    guardarVideo(req, fileName, nombre);
                 }
-                logInfo(req, tempFile, uf );
-
-                /*
-                 * if (req.raw().getAttribute("org.eclipse.jetty.multipartConfig") == null) {
-                 * MultipartConfigElement multipartConfigElement = new
-                 * MultipartConfigElement(System.getProperty("java.io.tmpdir"));
-                 * req.raw().setAttribute("org.eclipse.jetty.multipartConfig",
-                 * multipartConfigElement);
-                 * }
-                 * Part file = req.raw().getPart("File");
-                 * System.out.println(file);
-                 * Part name = req.raw().getPart("Formulario");
-                 * System.out.println(name);
-                 * return null;
-                 * String filename = file.getName();
-                 * if(name.getSize() > 0){
-                 * try{
-                 * filename = IOUtils.toString(name.getInputStream(), StandardCharsets.UTF_8);
-                 * } catch(Exception e){
-                 * e.printStackTrace();
-                 * }
-                 * }
-                 * Path filePath = Paths.get(".",filename);
-                 * Files.copy(file.getInputStream(),filePath);
-                 * return "Done!";
-                 * });
-                 * FileWriter fichero = null;
-                 * 
-                 * try {
-                 * System.out.println(linea);
-                 * fichero = new FileWriter("fichero_escritura.txt");
-                 * fichero.write(linea + "\n");
-                 * fichero.close();
-                 * System.out.println(linea);
-                 * } catch (Exception ex) {
-                 * System.out.println("Mensaje de la excepción: " + ex.getMessage());
-                 * }
-                 * Path tempFile = Files.createTempFile(uploadDir.toPath(), "", "");
-                 * 
-                 * req.attribute("org.eclipse.jetty.multipartConfig", new
-                 * MultipartConfigElement("/temp"));
-                 * 
-                 * try (InputStream input = req.raw().getPart("videoGrabado").getInputStream())
-                 * { // getPart needs to use same "name" as input field in form
-                 * Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
-                 * }
-                 * 
-                 * logInfo(req, tempFile);
-                 * return "<h1>You uploaded this image:<h1><img src='" + tempFile.getFileName()
-                 * + "'>";
-                 */
+                if (Tipo.equals("Cerrada")) {
+                    String RespuestaC = convertInputStreamToString(req.raw().getPart("RespuestaCorrecta-" + i).getInputStream());
+                    fileName = "FRespuestaC" + i;
+                    guardarVideo(req, fileName, nombre);
+                    String Opcion1 = convertInputStreamToString(req.raw().getPart("Opcion1-" + i).getInputStream());
+                    fileName = "FOpcion1-" + i;
+                    guardarVideo(req, fileName, nombre);
+                    String Opcion2 = convertInputStreamToString(req.raw().getPart("Opcion2-" + i).getInputStream());
+                    fileName = "FOpcion2-" + i;
+                    guardarVideo(req, fileName, nombre);
+                    String Opcion3 = convertInputStreamToString(req.raw().getPart("Opcion3-" + i).getInputStream());
+                    fileName = "FOpcion3-" + i;
+                    guardarVideo(req, fileName, nombre);
+                    String Opcion4 = convertInputStreamToString(req.raw().getPart("Opcion4-" + i).getInputStream());
+                    fileName = "FOpcion4-" + i;
+                    guardarVideo(req, fileName, nombre);
+                }
 
             }
             return null;
         });
 
+    }
+
+    private static void guardarVideo(Request req, String fileName, String materia) {
+        try {
+            req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+            Part uf = req.raw().getPart(fileName);
+            System.out.println(uf);
+
+            File uploadDir = new File("upload");
+            uploadDir.mkdir();
+            String nombredoc = materia + " " + uf.getName();
+            Path tempFile = Files.createTempFile(uploadDir.toPath(), nombredoc, ".mp4");
+            req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+            try (InputStream input = req.raw().getPart(fileName).getInputStream()) {
+                Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
+            }
+        } catch (IOException | ServletException e) {
+
+        }
     }
 
     private static void logInfo(Request req, Path tempFile, Part part) throws IOException, ServletException {

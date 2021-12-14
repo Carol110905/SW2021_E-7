@@ -47,7 +47,7 @@
     <div class="container">
         <section class="tm-section-head" id="top">
             <header id="header" class="text-center tm-text-gray">
-                <h1>Materia <span th:utext="${Nombre}">Desconocida</span> </h1>
+                <h1>Materia <span  th:utext="${Nombre}">Desconocida</span> </h1>
                 <p>Creacion De Examen</p>
             </header>
 
@@ -122,7 +122,7 @@
                                 <h2> ¿Cual es la Pregunta? </h2>
                                 <textarea name="txtPregunta0" id="txtPregunta0" cols="30" rows="2"
                                     placeholder="Pregunta sin titulo"></textarea>
-                                <input type="file" name="FPregunta0" id="FPregunta0"><br>
+                                <input type="file" name="FPregunta0" id="FPregunta0"  accept="video/*"><br>
                                 <ul>
                                     <li>
                                         <input type="radio" name="RadioAbierta0" id="RadioAbierta0"
@@ -158,7 +158,7 @@
             <div class="media-body tm-box-5-2" id="BotonesConfirmar">
                 <ul>
                     <li>
-                        <button class="btn" type="button" onclick="GuardarExamen('')">Confirmar</button>
+                        <button th:data-nombre="${Nombre}" class="btn" type="button" onclick="GuardarExamen(this.getAttribute('data-nombre'))">Confirmar</button>
                     </li>
                     <li>
                         <button class="btn" type="button" onclick="CancelarExamen()">Cancelar</button>
