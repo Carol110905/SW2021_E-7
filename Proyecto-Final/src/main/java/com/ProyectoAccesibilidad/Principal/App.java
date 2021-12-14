@@ -14,24 +14,10 @@ import javax.servlet.http.*;
 import java.io.*;
 import java.net.FileNameMap;
 import java.nio.file.*;
-import static spark.Spark.*;
 import static spark.debug.DebugScreen.*;
-
-import spark.*;
-import javax.servlet.*;
-import javax.servlet.http.*;
-import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.*;
-import static spark.Spark.*;
-import static spark.debug.DebugScreen.*;
 
-import com.ProyectoAccesibilidad.Principal.db.Alumno;
-import com.ProyectoAccesibilidad.Principal.db.AlumnoDAO;
-import com.ProyectoAccesibilidad.Principal.db.Materia;
-import com.ProyectoAccesibilidad.Principal.db.MateriaDAO;
-import com.ProyectoAccesibilidad.Principal.db.Profesor;
-import com.ProyectoAccesibilidad.Principal.db.ProfesorDAO;
+import com.ProyectoAccesibilidad.Principal.db.*;
 
 import org.apache.commons.io.IOUtils;
 import org.thymeleaf.context.Context;
@@ -44,8 +30,11 @@ import org.thymeleaf.context.IContext;
  */
 public class App {
     private static Gson gson = new Gson();
+    private static ArrayList<Pregunta> preguntas = new ArrayList<Pregunta>();
 
     public static void main(String[] args) {
+        MateriaDAO materiasd = new MateriaDAO();
+        System.out.println(materiasd.reiniciarExamen());
         port(1234);
         staticFiles.location("/");
 
@@ -102,6 +91,24 @@ public class App {
             return null;
         });
 
+        get("/iniciarExamen", (rq, rs) -> {
+            String nombreMateria = rq.queryParams("materia");
+            List<Pregunta> preguntasExamen = new ArrayList<Pregunta>();
+            for (int i = 0; i < preguntas.size(); i++) {
+                if(nombreMateria.equals(preguntas.get(i).getNombreExamen())){
+                    preguntasExamen.add(preguntas.get(i));
+                    System.out.println(preguntas.get(i));
+                }
+                
+            }
+            Map<String, Object> variables = new HashMap<>();
+            variables.put("Nombre", preguntasExamen.get(0).getNombreExamen());
+            variables.put("preguntas", preguntasExamen);
+            IContext context = new Context(rq.raw().getLocale(), variables);
+            String out = ThymeleafUtil.getTemplateEngine().process("2103_central/ContestarExamen", context);
+            System.out.println(nombreMateria);
+            return out;
+        });
         get("/Formulario", (rq, rs) -> {
             Map<String, Object> variables = new HashMap<>();
             IContext context = new Context(rq.raw().getLocale(), variables);
@@ -125,53 +132,65 @@ public class App {
         });
 
         post("/Escribirtxt", (req, res) -> {
+
             req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
-            int NoPreguntas = Integer.parseInt(convertInputStreamToString(req.raw().getPart("NoPreguntas").getInputStream()));
+            int NoPreguntas = Integer
+                    .parseInt(convertInputStreamToString(req.raw().getPart("NoPreguntas").getInputStream()));
             String nombre = convertInputStreamToString(req.raw().getPart("Examen").getInputStream());
             System.out.println("Examen: " + nombre + " con :" + NoPreguntas + " preguntas");
 
             for (int i = 0; i < NoPreguntas; i++) {
                 String Pregunta = convertInputStreamToString(req.raw().getPart("Pregunta" + i).getInputStream());
                 String fileName = "FilePregunta" + i;
-                guardarVideo(req, fileName, nombre);
+                String filePregunta = guardarVideo(req, fileName, nombre);
 
                 String Tipo = convertInputStreamToString(req.raw().getPart("Tipo" + i).getInputStream());
                 if (Tipo.equals("Abierta")) {
-                    String RespuestaC = convertInputStreamToString(req.raw().getPart("RespuestaCorrecta-" + i).getInputStream());
+                    String RespuestaC = convertInputStreamToString(
+                            req.raw().getPart("RespuestaCorrecta-" + i).getInputStream());
                     fileName = "FRespuestaC" + i;
-                    guardarVideo(req, fileName, nombre);
+                    String fileRespuestaC = guardarVideo(req, fileName, nombre);
+
+                    preguntas.add(new Pregunta(nombre, i, Pregunta, filePregunta, "Abierta", RespuestaC, fileRespuestaC));
                 }
                 if (Tipo.equals("Cerrada")) {
-                    String RespuestaC = convertInputStreamToString(req.raw().getPart("RespuestaCorrecta-" + i).getInputStream());
+                    String RespuestaC = convertInputStreamToString(
+                            req.raw().getPart("RespuestaCorrecta-" + i).getInputStream());
                     fileName = "FRespuestaC" + i;
-                    guardarVideo(req, fileName, nombre);
+                    String fileRespuestaC = guardarVideo(req, fileName, nombre);
                     String Opcion1 = convertInputStreamToString(req.raw().getPart("Opcion1-" + i).getInputStream());
                     fileName = "FOpcion1-" + i;
-                    guardarVideo(req, fileName, nombre);
+                    String fileOpcion1 = guardarVideo(req, fileName, nombre);
                     String Opcion2 = convertInputStreamToString(req.raw().getPart("Opcion2-" + i).getInputStream());
                     fileName = "FOpcion2-" + i;
-                    guardarVideo(req, fileName, nombre);
+                    String fileOpcion2 = guardarVideo(req, fileName, nombre);
                     String Opcion3 = convertInputStreamToString(req.raw().getPart("Opcion3-" + i).getInputStream());
                     fileName = "FOpcion3-" + i;
-                    guardarVideo(req, fileName, nombre);
+                    String fileOpcion3 = guardarVideo(req, fileName, nombre);
                     String Opcion4 = convertInputStreamToString(req.raw().getPart("Opcion4-" + i).getInputStream());
                     fileName = "FOpcion4-" + i;
-                    guardarVideo(req, fileName, nombre);
+                    String fileOpcion4 = guardarVideo(req, fileName, nombre);
+
+                    preguntas.add(new Pregunta(nombre, i, Pregunta, filePregunta, "Cerrada", RespuestaC, fileRespuestaC,
+                            Opcion1, fileOpcion1,
+                            Opcion2, fileOpcion2, Opcion3, fileOpcion3, Opcion4, fileOpcion4));
                 }
 
             }
+            MateriaDAO m = new MateriaDAO();
+            System.out.println(m.examenCreado(nombre));
             return null;
         });
 
     }
 
-    private static void guardarVideo(Request req, String fileName, String materia) {
+    private static String guardarVideo(Request req, String fileName, String materia) {
         try {
             req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
             Part uf = req.raw().getPart(fileName);
             System.out.println(uf);
 
-            File uploadDir = new File("upload");
+            File uploadDir = new File("Proyecto Accesibilidad\\SW2021_E-7\\Proyecto-Final\\src\\main\\resources\\upload\\");
             uploadDir.mkdir();
             String nombredoc = materia + " " + uf.getName();
             Path tempFile = Files.createTempFile(uploadDir.toPath(), nombredoc, ".mp4");
@@ -179,23 +198,20 @@ public class App {
             try (InputStream input = req.raw().getPart(fileName).getInputStream()) {
                 Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
             }
+
+            File file = logInfo(req, tempFile, uf);
+            File fileRename = new File("Proyecto Accesibilidad\\SW2021_E-7\\Proyecto-Final\\src\\main\\resources\\upload\\" + nombredoc + ".mp4");
+            file.renameTo(fileRename);
+            return "upload/" + fileRename.getName();
         } catch (IOException | ServletException e) {
 
         }
-    }
-
-    private static void logInfo(Request req, Path tempFile, Part part) throws IOException, ServletException {
-        System.out.println("Uploaded file '" + getFileName(part) + "' saved as '"
-                + tempFile.toAbsolutePath() + "'");
-    }
-
-    private static String getFileName(Part part) {
-        for (String cd : part.getHeader("content-disposition").split(";")) {
-            if (cd.trim().startsWith("filename")) {
-                return cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
-            }
-        }
         return null;
+    }
+
+    private static File logInfo(Request req, Path tempFile, Part part) throws IOException, ServletException {
+        File file = tempFile.toFile();
+        return file;
     }
 
     private static String convertInputStreamToString(InputStream is) throws IOException {

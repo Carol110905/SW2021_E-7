@@ -140,7 +140,7 @@ function GuardarExamen(Nombre) {
         if(ArrayCerrada[i]=="true"){
             formData.append("Tipo"+i,"Cerrada");
             formData.append("RespuestaCorrecta-"+i+"", nombreTxtArea("RespuestaCorrecta-"+i));
-            formData.append("FRespuestaC"+i, nombreFile("#FRespuetaC"+i));
+            formData.append("FRespuestaC"+i, nombreFile("#FRespuestaC"+i));
             formData.append("Opcion1-"+i, nombreTxtArea("Respuesta1-"+i));
             formData.append("FOpcion1-"+i, nombreFile("#FRespuesta1-"+i));
             formData.append("Opcion2-"+i, nombreTxtArea("Respuesta2-"+i));

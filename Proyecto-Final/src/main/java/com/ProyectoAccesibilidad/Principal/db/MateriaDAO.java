@@ -47,6 +47,46 @@ public class MateriaDAO {
         return msj;
     }
 
+    public String examenCreado(String nombre){
+        Connection conn = null;
+        PreparedStatement prestm = null;
+        String msj = "";
+
+        conn = conexion.getConnection();
+        try {
+            String sql = "UPDATE materia SET examen=1 WHERE Nombre=?";
+            prestm = conn.prepareStatement(sql);
+            prestm.setString(1, nombre);
+            if (prestm.executeUpdate() >0) 
+                msj = "Examen creado";
+            else
+                msj = "Examen no creado";
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return msj;
+    }
+    public String reiniciarExamen(){
+        Connection conn = null;
+        PreparedStatement prestm = null;
+        String msj = "";
+
+        conn = conexion.getConnection();
+        try {
+            String sql = "UPDATE materia SET examen=0";
+            prestm = conn.prepareStatement(sql);
+            if (prestm.executeUpdate() >0) 
+                msj = "Examenes Reiniciados";
+            else
+                msj = "Examenes Reiniciados";
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return msj;
+    }
+
     public List<Materia> BuscarMateriaProfesor(int IdProfesor){
         List <Materia> materias = new ArrayList<Materia>();
         int id = IdProfesor;
