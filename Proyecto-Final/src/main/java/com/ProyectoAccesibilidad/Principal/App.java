@@ -11,6 +11,8 @@ import com.google.gson.*;
 import spark.*;
 import javax.servlet.*;
 import javax.servlet.http.*;
+import javax.swing.text.Document;
+
 import java.io.*;
 import java.net.FileNameMap;
 import java.nio.file.*;
@@ -31,10 +33,11 @@ import org.thymeleaf.context.IContext;
 public class App {
     private static Gson gson = new Gson();
     private static ArrayList<Pregunta> preguntas = new ArrayList<Pregunta>();
+    private static ArrayList<Respuesta> respuestas = new ArrayList<Respuesta>();
 
     public static void main(String[] args) {
         MateriaDAO materiasd = new MateriaDAO();
-        System.out.println(materiasd.reiniciarExamen());
+        
         port(1234);
         staticFiles.location("/");
 
@@ -98,7 +101,6 @@ public class App {
             for (int i = 0; i < preguntas.size(); i++) {
                 if (nombreMateria.equals(preguntas.get(i).getNombreExamen())) {
                     preguntasExamen.add(preguntas.get(i));
-                    System.out.println(preguntas.get(i));
                 }
 
             }
@@ -109,7 +111,7 @@ public class App {
             variables.put("preguntas", preguntasExamen);
             IContext context = new Context(rq.raw().getLocale(), variables);
             String out = ThymeleafUtil.getTemplateEngine().process("2103_central/ContestarExamen", context);
-            System.out.println(nombreMateria);
+
             return out;
         });
         get("/Formulario", (rq, rs) -> {
@@ -128,6 +130,39 @@ public class App {
             String out = ThymeleafUtil.getTemplateEngine().process("2103_central/CrearExamen", context);
             return out;
         });
+        get("/verRespuestas", (rq, rs) -> {
+            String m = rq.queryParams("materia");
+            MateriaDAO mad = new MateriaDAO();
+            AlumnoDAO ald = new AlumnoDAO();
+            int idMateria = mad.BuscarIdMateria(m);
+            ArrayList<Integer> idAlumnos = mad.BuscarIDAlumnoMateria(idMateria);
+            ArrayList<String> nombres = new ArrayList<String>();
+            ArrayList<Respuesta> respuestasEnviar = new ArrayList<Respuesta>();
+            for (int i = 0; i < idAlumnos.size(); i++) {
+                nombres.add(ald.BuscarNombreAlumno(idAlumnos.get(i)));
+            }
+            for (int i = 0; i < respuestas.size(); i++) {
+                if (respuestas.get(i).getNombreMateria().equals(m)) {
+                    respuestasEnviar.add(respuestas.get(i));
+                }
+                for (int j = 0; j < preguntas.size(); j++) {
+
+                    if (preguntas.get(j).getNombreExamen().equals(m)) {
+                        if (respuestasEnviar.get(i).getNoPregunta() == preguntas.get(j).getNoPregunta()) {
+                            respuestasEnviar.get(i).setPregunta(preguntas.get(j).getPregunta());
+                            respuestasEnviar.get(i).setRespuestaCorrecta(preguntas.get(j).getRespuestaCorrecta());
+                        }
+                    }
+                }
+
+            }
+            Map<String, Object> variables = new HashMap<>();
+            variables.put("Respuestas", respuestasEnviar);
+
+            IContext context = new Context(rq.raw().getLocale(), variables);
+            String out = ThymeleafUtil.getTemplateEngine().process("2103_central/VerRespuestas", context);
+            return out;
+        });
 
         get("/GuardarExamen", (rq, rs) -> {
 
@@ -140,7 +175,6 @@ public class App {
             int NoPreguntas = Integer
                     .parseInt(convertInputStreamToString(req.raw().getPart("NoPreguntas").getInputStream()));
             String nombre = convertInputStreamToString(req.raw().getPart("Examen").getInputStream());
-            System.out.println("Examen: " + nombre + " con :" + NoPreguntas + " preguntas");
 
             for (int i = 0; i < NoPreguntas; i++) {
                 String Pregunta = convertInputStreamToString(req.raw().getPart("Pregunta" + i).getInputStream());
@@ -182,7 +216,6 @@ public class App {
 
             }
             MateriaDAO m = new MateriaDAO();
-            System.out.println(m.examenCreado(nombre));
             return null;
         });
         post("/guardarRespuestas", (req, res) -> {
@@ -191,18 +224,24 @@ public class App {
                     .parseInt(convertInputStreamToString(req.raw().getPart("NoPreguntas").getInputStream()));
             String nombreExamen = convertInputStreamToString(req.raw().getPart("NombreExamen").getInputStream());
             String nombreAlumno = convertInputStreamToString(req.raw().getPart("NombreAlumno").getInputStream());
+            String nombreExamenes = convertInputStreamToString(req.raw().getPart("NombreExamen").getInputStream());
             nombreExamen += " " + nombreAlumno;
             for (int i = 0; i < NoPreguntas; i++) {
                 String TipoPregunta = convertInputStreamToString(req.raw().getPart("Tipo" + i).getInputStream());
                 if (TipoPregunta.equals("Abierta")) {
-                    String RespuestaPregunta = convertInputStreamToString(req.raw().getPart("RespuestaPregunta"+i).getInputStream());
+                    String RespuestaPregunta = convertInputStreamToString(
+                            req.raw().getPart("RespuestaPregunta-" + i).getInputStream());
                     String fileName = "FRespuestaPregunta" + i;
-                    String fileOpcion3 = guardarVideo(req, fileName, nombreExamen);
+                    String fileOpcion = guardarVideo(req, fileName, nombreExamen);
+                    respuestas.add(
+                            new Respuesta(nombreExamenes, nombreAlumno, i, TipoPregunta, RespuestaPregunta,
+                                    fileOpcion));
                 }
-                if(TipoPregunta.equals("Cerradas")){
-                    for(int j=1;j<=4;j++){
-                        String RespuestaPregunta = convertInputStreamToString(req.raw().getPart("RespuestaPregunta"+i).getInputStream());
-                    }
+                if (TipoPregunta.equals("Cerrada")) {
+                    String RespuestaPregunta = convertInputStreamToString(
+                            req.raw().getPart("RespuestaPregunta-" + i).getInputStream());
+                    respuestas.add(new Respuesta(nombreExamenes, nombreAlumno, i, TipoPregunta, RespuestaPregunta));
+
                 }
             }
 
@@ -249,8 +288,6 @@ public class App {
         try {
             req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
             Part uf = req.raw().getPart(fileName);
-            System.out.println(uf);
-            System.out.println(uf);
 
             File uploadDir = new File(
                     "Proyecto Accesibilidad\\SW2021_E-7\\Proyecto-Final\\src\\main\\resources\\upload\\");

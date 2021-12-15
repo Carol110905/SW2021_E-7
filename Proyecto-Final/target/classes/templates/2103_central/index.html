@@ -34,7 +34,7 @@
             renderPage = false;
         }
 
-        function MostrarMaterias(){
+        function MostrarMaterias() {
             alert("Hola");
         }
     </script>
@@ -111,7 +111,7 @@
 
 
 
-       
+
 
         <section class="tm-section-4 tm-section-mb" id="tm-section-4">
             <div class="row">
@@ -132,24 +132,50 @@
                     <div th:each="materias : ${listaMaterias}" class="media tm-media">
                         <img src="/templates/2103_central/img/sc4-img-2.jpg" class="img-responsive tm-media-img">
                         <div class="media-body tm-box-5" th:switch="${Rol}">
-                            <form action="/crearExamen" method="get">
-                                <h2> <span th:utext="${materias.Nombre}"> Examen Desconocido</span></h2>
-                                <div th:case="Profesor" class="media-body tm-box-5" id="BotonesExamen">
-                                    
-                                        <input type="hidden" name="materia" id="materia" th:value="${materias.Nombre}" >
-                                        <button  class="btn" title="CrearExamen" id="CrearExamen">Crear Examen</button> <!---->
-                                   
+
+                            <h2> <span th:utext="${materias.Nombre}"> Examen Desconocido</span></h2>
+                            <div th:case="Profesor" class="media-body tm-box-5" id="BotonesExamen">
+                                <div th:switch="${materias.Examen}">
+
+                                    <div th:case="True">
+                                        <form action="/verRespuestas" method="get">
+                                            <div class="media-body tm-box-5">
+                                                <input type="hidden" name="materia" id="materia"
+                                                    th:value="${materias.Nombre}">
+                                                <button class="btn" title="CrearExamen" id="CrearExamen">Ver
+                                                    Respuestas</button>
+                                            </div>
+                                            <!---->
+                                        </form>
+                                    </div>
+
+                                    <div th:case="False">
+                                        <form action="/crearExamen" method="get">
+                                            <div class="media-body tm-box-5">
+                                                <input type="hidden" name="materia" id="materia"
+                                                    th:value="${materias.Nombre}">
+                                                <button class="btn" title="CrearExamen" id="CrearExamen">Crear
+                                                    Examen</button>
+                                                <!---->
+                                            </div>
+                                        </form>
+                                    </div>
+
                                 </div>
-                            </form>
+
+
+                            </div>
                             <form action="/iniciarExamen" method="get">
                                 <div th:case="Alumno" class="media-body tm-box-5" id="BotonesExamen">
                                     <div th:switch="${materias.Examen}">
                                         <div th:case="true" class="media-body tm-box-5" id="BotonesExamen">
-                                            <input type="hidden" name="materia" id="materia" th:value="${materias.Nombre}" >
-                                            <input type="hidden" name="Alumno" id="Alumno" th:value="${Nombre}" >
+                                            <input type="hidden" name="materia" id="materia"
+                                                th:value="${materias.Nombre}">
+                                            <input type="hidden" name="Alumno" id="Alumno" th:value="${Nombre}">
                                             <p>Examen Creado</p>
-                                            <button th:data-nombre="${materias.Nombre}" onclick="iniciarExamen(this.getAttribute('data-nombre'))" 
-                                            class="btn tm-btn-pad-2 float-right">Iniciar Examen</button>
+                                            <button th:data-nombre="${materias.Nombre}"
+                                                onclick="iniciarExamen(this.getAttribute('data-nombre'))"
+                                                class="btn tm-btn-pad-2 float-right">Iniciar Examen</button>
                                             <!--#tm-section-3 -->
                                         </div>
                                     </div>

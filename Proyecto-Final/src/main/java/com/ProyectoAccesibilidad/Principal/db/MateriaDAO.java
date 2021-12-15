@@ -1,5 +1,6 @@
 package com.ProyectoAccesibilidad.Principal.db;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -86,7 +87,46 @@ public class MateriaDAO {
         }
         return msj;
     }
+    public ArrayList<Integer> BuscarIDAlumnoMateria(int idMateria){
+        int IdMateria = idMateria;
+        ArrayList <Integer> ids = new ArrayList<Integer>();
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        conn = conexion.getConnection();
+        try{
+            String sql = "SELECT IdAlumno FROM cursa WHERE IdMateria = ?";
+            stm = conn.prepareStatement(sql);
+            stm.setInt(1, IdMateria);
+            rs = stm.executeQuery();
+            while (rs.next()){
+                ids.add(rs.getInt("IdAlumno"));
+            }
+        }catch(Exception e){
 
+        }
+        return ids;
+    }
+    public int BuscarIdMateria(String NombreMateria){
+        String nombreMateria = NombreMateria;
+        int idMateria=0;
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        conn = conexion.getConnection();
+        try{
+            String sql = "SELECT IdMateria FROM materia WHERE Nombre = ?";
+            stm = conn.prepareStatement(sql);
+            stm.setString(1, nombreMateria);
+            rs = stm.executeQuery();
+            if(rs.next() != false){
+                idMateria = rs.getInt("IdMateria");
+            }
+        }catch(Exception e){
+
+        }
+        return idMateria;
+    }    
     public List<Materia> BuscarMateriaProfesor(int IdProfesor){
         List <Materia> materias = new ArrayList<Materia>();
         int id = IdProfesor;

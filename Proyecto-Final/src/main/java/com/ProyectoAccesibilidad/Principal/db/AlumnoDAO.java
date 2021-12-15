@@ -47,7 +47,26 @@ public class AlumnoDAO {
         }
         return msj;
     }
+    public String BuscarNombreAlumno(int idAlumno){
+        int IdAlumno = idAlumno;
+        String nombre="";
+        PreparedStatement stm = null;
+        ResultSet rs = null;
+        Connection conn = null;
+        conn = conexion.getConnection();
+        try{
+            String sql = "SELECT Username FROM alumno WHERE IdAlumno  = ?";
+            stm = conn.prepareStatement(sql);
+            stm.setInt(1, IdAlumno);
+            rs = stm.executeQuery();
+            if(rs.next() != false){
+                nombre = rs.getString("Username");
+            }
+        }catch(Exception e){
 
+        }
+        return nombre;
+    }
     public Alumno BuscarAlumno(String Name){
         String nombre = Name;
         PreparedStatement stm = null;

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="referrer" content="never">
-    <title>Resolucion Examen</title>
+    <title>Ver Respuestas</title>
     <!--
 
     Template 2103 Central
@@ -48,76 +48,30 @@
         <section class="tm-section-head" id="top">
             <header id="header" class="text-center tm-text-gray">
                 <h1>Materia <span th:utext="${Nombre}">Desconocida</span> </h1>
-                <p>Resolucion De Examen</p>
+                <p>Ver Respuestas</p>
             </header>
-            <input type="hidden" id="NoPreguntas" th:value="${NoPreguntas}">
-            <input type="hidden" id="NombreExamen" th:value="${Nombre}">
-            <input type="hidden" id="NombreAlumno" th:value="${NombreAlumno}">
+            
         </section>
 
         <section class="tm-section-5" id="tm-section-5">
             <div class="row">
-
                 <form id="InformacionExamen" name="InformacionExamen" action="">
                     <div id="Preguntas" class="Preguntas">
                         <!---->
-                        <div th:each="preguntas : ${preguntas}" class="media tm-media">
+                        <div th:each="respuestas : ${Respuestas}" class="media tm-media">
                             <div div class="media-body tm-box-5">
-                                <h2><span th:utext="${preguntas.Pregunta}"></span> </h2>
-                                <h2><span th:src="${preguntas.FPregunta}"></span> </h2>
-                                <div class="media-body tm-box-5" th:switch="${preguntas.TipoPregunta}">
-                                    <div th:case="Abierta" class="media-body tm-box-5">
-                                        <input type="hidden" th:id="'Tipo-'+${preguntas.NoPregunta}" value="Abierta">
-                                        <textarea name="" th:id="'txtRespuestaAbierta-'+${preguntas.NoPregunta}"
-                                            cols="30" rows="2" placeholder="Pregunta sin titulo"></textarea>
-
-                                        <video id="" width="30%" controls="controls" th:src="${preguntas.FPregunta}">
-
-                                        </video>
-
-                                        <div>
-                                            <video th:id="'video-'+${preguntas.NoPregunta}" width="20%"></video>
-                                            <div th:id="'xxx-'+${preguntas.NoPregunta}"+></div>
-                                            <button type="button"
-                                                th:id="'btnComenzarGrabacion-' + ${preguntas.NoPregunta}"
-                                                th:data-Nu = "${preguntas.NoPregunta}" onclick="comenzarAGrabar(this.getAttribute('data-Nu'))"
-                                                >Grabar</button>
-                                            <button type="button"
-                                                th:id="'btnDetenerGrabacion-' + ${preguntas.NoPregunta}"
-                                                th:data-Nu = "${preguntas.NoPregunta}" th:data-No = "${Nombre}"
-                                                onclick="detenerGrabacion(this.getAttribute('data-Nu'))"
-                                                >Detener</button>
-                                            
-                                        </div>
-
-
+                                <h2>Respuestas del Alumno: <span th:utext="${respuestas.NombreAlumno}"></span></h2>
+                                <h2>Pregunta: <span th:utext="${respuestas.Pregunta}"></span> </h2>
+                                <h2>Respuesta Correcta: <span th:utext="${respuestas.RespuestaCorrecta}"></span> </h2>
+                                <h2>Respuesta del Alumno: <span th:utext="${respuestas.Respuesta}"></span> </h2>
+                                <div th:switch="${respuestas.TipoPregunta}">
+                                    <div th:case="Abierta">
+                                        <video id="" width="30%" controls="controls" th:src="${respuestas.FRespuesta}"></video>
                                     </div>
-                                    <div th:case="Cerrada" class="media-body tm-box-5">
-                                        <input type="hidden" th:id="'Tipo-'+${preguntas.NoPregunta}" value="Cerradas">
-                                        <div id="Opciones">
-                                            <video id="" width="30%" th:src="${preguntas.FPregunta}"
-                                                controls></video><br>
-                                            <input type="radio" name="RadioAbierta0"
-                                                th:id="'Opcion1' + ${preguntas.NoPregunta}">
-                                                <span th:utext="${preguntas.Respuesta1}"></span> <video id="" width="30%"
-                                                th:src="${preguntas.FRespuesta1}" controls></video>
-                                            <input type="radio" name="RadioAbierta0"
-                                                th:id="'Opcion2' + ${preguntas.NoPregunta}">
-                                                <span th:utext="${preguntas.Respuesta2}"></span> <video id="" width="30%"
-                                                th:src="${preguntas.FRespuesta2}" controls></video> <br>
-                                            <input type="radio" name="RadioAbierta0"
-                                                th:id="'Opcion3' + ${preguntas.NoPregunta}">
-                                                <span th:utext="${preguntas.Respuesta3}"></span> <video id="" width="30%"
-                                                th:src="${preguntas.FRespuesta3}" controls></video>
-                                            <input type="radio" name="RadioAbierta0"
-                                                th:id="'Opcion4' + ${preguntas.NoPregunta}">
-                                                <span th:utext="${preguntas.Respuesta4}"></span> <video id="" width="30%"
-                                                th:src="${preguntas.FRespuesta4}" controls></video> <br>
-                                        </div>
-                                    </div>
+                                
                                 </div>
-                            </div>
-
+                                </video>
+                            </div>    
                         </div>
                     </div>
                 </form>
