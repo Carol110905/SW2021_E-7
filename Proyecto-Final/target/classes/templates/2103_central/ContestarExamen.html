@@ -74,13 +74,19 @@
                                         </video>
 
                                         <div>
-                                            <video th:id="'camara-'+${preguntas.NoPregunta}" width="20%"></video>
-                                            <video id="" width="30%" src="1.mp4" controls></video>
+                                            <video th:id="'video-'+${preguntas.NoPregunta}" width="20%"></video>
+                                            <div th:id="'xxx-'+${preguntas.NoPregunta}"+></div>
                                             <button type="button"
-                                                th:id="'grabar' + ${preguntas.NoPregunta}">Grabar</button>
+                                                th:id="'btnComenzarGrabacion-' + ${preguntas.NoPregunta}"
+                                                th:data-Nu = "${preguntas.NoPregunta}" onclick="comenzarAGrabar(this.getAttribute('data-Nu'))"
+                                                >Grabar</button>
                                             <button type="button"
-                                                th:id="'detener' + ${preguntas.NoPregunta}">Detener</button>
+                                                th:id="'btnDetenerGrabacion-' + ${preguntas.NoPregunta}"
+                                                th:data-Nu = "${preguntas.NoPregunta}" onclick="detenerGrabacion(this.getAttribute('data-Nu'))"
+                                                >Detener</button>
+                                            
                                         </div>
+
 
                                     </div>
                                     <div th:case="Cerrada" class="media-body tm-box-5">

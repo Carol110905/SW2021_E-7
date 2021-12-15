@@ -184,6 +184,38 @@ public class App {
             return null;
         });
 
+        post("/guardarGrabacion", (req, res) -> {
+
+            File uploadDir = new File("upload");
+            uploadDir.mkdir(); // create the upload directory if it doesn't exist
+    
+            staticFiles.externalLocation("upload");
+            Path tempFile = Files.createTempFile(uploadDir.toPath(), "", "");
+
+            req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+
+            try (InputStream input = req.raw().getPart("videoGrabado").getInputStream()) { // getPart needs to use same "name" as input field in form
+                Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
+            }
+
+            logInfo2(req, tempFile);
+            return "<h1>You uploaded this image:<h1><img src='" + tempFile.getFileName() + "'>";
+
+        });
+
+    }
+
+    private static void logInfo2(Request req, Path tempFile) throws IOException, ServletException {
+        System.out.println("Uploaded file '" + getFileName2(req.raw().getPart("uploaded_file")) + "' saved as '" + tempFile.toAbsolutePath() + "'");
+    }
+
+    private static String getFileName2(Part part) {
+        for (String cd : part.getHeader("content-disposition").split(";")) {
+            if (cd.trim().startsWith("filename")) {
+                return cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
+            }
+        }
+        return null;
     }
 
     private static String guardarVideo(Request req, String fileName, String materia) {
