@@ -146,6 +146,7 @@
                                     <div th:switch="${materias.Examen}">
                                         <div th:case="true" class="media-body tm-box-5" id="BotonesExamen">
                                             <input type="hidden" name="materia" id="materia" th:value="${materias.Nombre}" >
+                                            <input type="hidden" name="Alumno" id="Alumno" th:value="${Nombre}" >
                                             <p>Examen Creado</p>
                                             <button th:data-nombre="${materias.Nombre}" onclick="iniciarExamen(this.getAttribute('data-nombre'))" 
                                             class="btn tm-btn-pad-2 float-right">Iniciar Examen</button>

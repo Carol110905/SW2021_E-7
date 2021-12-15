@@ -211,32 +211,3 @@ function AgregarAbierta(num) {
         '</ul><input type="file" name=FRespuesta1-' + num + ' id="FRespuesta1-' + num + '" accept="video/*"></div>';
     return preguntaAbierta;
 }
-
-
-function ConfirmarExamen() {
-    for (var i = 0; i < NoPreguntas; i++) {
-        console.log(1);
-        if (document.getElementById(i) != null) {
-            console.log(2);
-            if (document.getElementById("txtPregunta" + i) != null) {
-                console.log(3);
-                var Pregunta = document.getElementById("txtPregunta" + i).value;
-                if (document.getElementById("RadioCerrada" + i).checked == true) {
-                    console.log(4);
-                    var RespuestaCorrecta = document.getElementById("RespuestaCorrecta(" + i + ")").value;
-                    var Respuesta1 = document.getElementById("Respuesta1(" + i + ")").value;
-                    var Respuesta2 = document.getElementById("Respuesta2(" + i + ")").value;
-                    var Respuesta3 = document.getElementById("Respuesta3(" + i + ")").value;
-                    var Respuesta4 = document.getElementById("Respuesta4(" + i + ")").value;
-                    console.log(RespuestaCorrecta + ' ' + Respuesta1 + ' ' + Respuesta2 + ' ' + Respuesta3 + ' ' + Respuesta4)
-                } else if (document.getElementById("RadioAbierta" + i).checked == true) {
-                    var RespuestaCorrecta = document.getElementById("RespuestaCorrecta(" + i + ")").value;
-                } else {
-                    alert("Selecciona un tipo de pregunta");
-                }
-            } else {
-                alert("Verifica que todos los campos esten llenos");
-            }
-        }
-    }
-}

@@ -93,6 +93,7 @@ public class App {
 
         get("/iniciarExamen", (rq, rs) -> {
             String nombreMateria = rq.queryParams("materia");
+            String nombreAlumno = rq.queryParams("Alumno");
             List<Pregunta> preguntasExamen = new ArrayList<Pregunta>();
             for (int i = 0; i < preguntas.size(); i++) {
                 if (nombreMateria.equals(preguntas.get(i).getNombreExamen())) {
@@ -102,6 +103,7 @@ public class App {
 
             }
             Map<String, Object> variables = new HashMap<>();
+            variables.put("NombreAlumno", nombreAlumno);
             variables.put("Nombre", preguntasExamen.get(0).getNombreExamen());
             variables.put("NoPreguntas", preguntas.size());
             variables.put("preguntas", preguntasExamen);
@@ -183,7 +185,10 @@ public class App {
             System.out.println(m.examenCreado(nombre));
             return null;
         });
+        post("/guardarRespuestas", (req, res)->{
 
+            return null;
+        });
         post("/guardarGrabacion", (req, res) -> {
 
             File uploadDir = new File("upload");
