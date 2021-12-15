@@ -1,6 +1,7 @@
 let tiempoInicio, mediaRecorder, idIntervalo;
+let 
 function comenzarAGrabar(num){
-  const $video = document.querySelector("#video-"+num)
+  const $video = document.querySelector("#video-"+num);
   if (mediaRecorder) return alert("Ya se está grabando");
 
   navigator.mediaDevices.getUserMedia({
@@ -28,7 +29,7 @@ function comenzarAGrabar(num){
               stream.getTracks().forEach(track => track.stop());
               // Detener la cuenta regresiva
               // Convertir los fragmentos a un objeto binario
-              const blobVideo = new Blob(fragmentosDeAudio);
+              const blobVideo = new Blob(fragmentosDeAudio, { 'type': 'video/.mp4; codecs=vp8' });
 
               // Crear una URL o enlace para descargar
               const urlParaDescargar = URL.createObjectURL(blobVideo);
@@ -37,8 +38,9 @@ function comenzarAGrabar(num){
               document.body.appendChild(a);
               a.style = "display: none";
               a.href = urlParaDescargar;
-              a.download = "grabacion_parzibyte.me.webm";
+              a.download = document.getElementById("NombreExamen").value + "-Pregunta" + num + ".mp4";
               // Hacer click en el enlace
+              console.log(blobVideo);
               a.click();
               // Y remover el objeto
               window.URL.revokeObjectURL(urlParaDescargar);
