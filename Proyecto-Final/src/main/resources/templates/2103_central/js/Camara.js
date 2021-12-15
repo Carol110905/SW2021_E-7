@@ -56,3 +56,10 @@ const detenerGrabacion = () => {
   mediaRecorder.stop();
   mediaRecorder = null;
 };
+
+
+function GuardarRespuestas(){
+  var documente = document.querySelector("video-0");
+  var Video = documente.files[0];
+  console.log(Video);
+}
