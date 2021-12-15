@@ -95,14 +95,15 @@ public class App {
             String nombreMateria = rq.queryParams("materia");
             List<Pregunta> preguntasExamen = new ArrayList<Pregunta>();
             for (int i = 0; i < preguntas.size(); i++) {
-                if(nombreMateria.equals(preguntas.get(i).getNombreExamen())){
+                if (nombreMateria.equals(preguntas.get(i).getNombreExamen())) {
                     preguntasExamen.add(preguntas.get(i));
                     System.out.println(preguntas.get(i));
                 }
-                
+
             }
             Map<String, Object> variables = new HashMap<>();
             variables.put("Nombre", preguntasExamen.get(0).getNombreExamen());
+            variables.put("NoPreguntas", preguntas.size());
             variables.put("preguntas", preguntasExamen);
             IContext context = new Context(rq.raw().getLocale(), variables);
             String out = ThymeleafUtil.getTemplateEngine().process("2103_central/ContestarExamen", context);
@@ -151,7 +152,8 @@ public class App {
                     fileName = "FRespuestaC" + i;
                     String fileRespuestaC = guardarVideo(req, fileName, nombre);
 
-                    preguntas.add(new Pregunta(nombre, i, Pregunta, filePregunta, "Abierta", RespuestaC, fileRespuestaC));
+                    preguntas.add(
+                            new Pregunta(nombre, i, Pregunta, filePregunta, "Abierta", RespuestaC, fileRespuestaC));
                 }
                 if (Tipo.equals("Cerrada")) {
                     String RespuestaC = convertInputStreamToString(
@@ -190,7 +192,8 @@ public class App {
             Part uf = req.raw().getPart(fileName);
             System.out.println(uf);
 
-            File uploadDir = new File("Proyecto Accesibilidad\\SW2021_E-7\\Proyecto-Final\\src\\main\\resources\\upload\\");
+            File uploadDir = new File(
+                    "Proyecto Accesibilidad\\SW2021_E-7\\Proyecto-Final\\src\\main\\resources\\upload\\");
             uploadDir.mkdir();
             String nombredoc = materia + " " + uf.getName();
             Path tempFile = Files.createTempFile(uploadDir.toPath(), nombredoc, ".mp4");
@@ -200,7 +203,9 @@ public class App {
             }
 
             File file = logInfo(req, tempFile, uf);
-            File fileRename = new File("Proyecto Accesibilidad\\SW2021_E-7\\Proyecto-Final\\src\\main\\resources\\upload\\" + nombredoc + ".mp4");
+            File fileRename = new File(
+                    "Proyecto Accesibilidad\\SW2021_E-7\\Proyecto-Final\\src\\main\\resources\\upload\\" + nombredoc
+                            + ".mp4");
             file.renameTo(fileRename);
             return "upload/" + fileRename.getName();
         } catch (IOException | ServletException e) {

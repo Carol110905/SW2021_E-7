@@ -50,6 +50,7 @@
                 <h1>Materia <span th:utext="${Nombre}">Desconocida</span> </h1>
                 <p>Resolucion De Examen</p>
             </header>
+            <input type="hidden" id="NoPreguntas" th:value="${NoPreguntas}">
         </section>
 
         <section class="tm-section-5" id="tm-section-5">
@@ -64,31 +65,45 @@
                                 <h2><span th:src="${preguntas.FPregunta}"></span> </h2>
                                 <div class="media-body tm-box-5" th:switch="${preguntas.TipoPregunta}">
                                     <div th:case="Abierta" class="media-body tm-box-5">
-                                        <textarea name="txtPregunta0" id="txtPregunta0" cols="30" rows="2"
-                                            placeholder="Pregunta sin titulo"></textarea>
 
-                                        <video id="" width="30%" autoplay="autoplay" controls="controls"
-                                         th:src="${preguntas.FPregunta}">
+                                        <textarea name="" th:id="'txtRespuestaAbierta-'+${preguntas.NoPregunta}"
+                                            cols="30" rows="2" placeholder="Pregunta sin titulo"></textarea>
+
+                                        <video id="" width="30%" controls="controls" th:src="${preguntas.FPregunta}">
+
                                         </video>
+
+                                        <div>
+                                            <video th:id="'camara-'+${preguntas.NoPregunta}" width="20%"></video>
+                                            <video id="" width="30%" src="1.mp4" controls></video>
+                                            <button type="button"
+                                                th:id="'grabar' + ${preguntas.NoPregunta}">Grabar</button>
+                                            <button type="button"
+                                                th:id="'detener' + ${preguntas.NoPregunta}">Detener</button>
+                                        </div>
+
                                     </div>
                                     <div th:case="Cerrada" class="media-body tm-box-5">
-                                        <textarea name="txtPregunta0" id="txtPregunta0" cols="30" rows="2"
-                                            placeholder="Pregunta sin titulo"></textarea> <br>
                                         <div id="Opciones">
-                                            <video id="" width="30%" th:src="${preguntas.FPregunta}" controls></video><br>
-                                            <input type="radio" name="RadioAbierta0" id="RadioAbierta0"
+                                            <video id="" width="30%" th:src="${preguntas.FPregunta}"
+                                                controls></video><br>
+                                            <input type="radio" name="RadioAbierta0"
+                                                th:id="'Opcion1' + ${preguntas.NoPregunta}"
                                                 onclick="PreguntaAbierta(0)"><span
                                                 th:utext="${preguntas.Respuesta1}"></span> <video id="" width="30%"
                                                 th:src="${preguntas.FRespuesta1}" controls></video>
-                                            <input type="radio" name="RadioAbierta0" id="RadioAbierta0"
+                                            <input type="radio" name="RadioAbierta0"
+                                                th:id="'Opcion2' + ${preguntas.NoPregunta}"
                                                 onclick="PreguntaAbierta(0)"><span
                                                 th:utext="${preguntas.Respuesta2}"></span> <video id="" width="30%"
                                                 th:src="${preguntas.FRespuesta2}" controls></video> <br>
-                                            <input type="radio" name="RadioAbierta0" id="RadioAbierta0"
+                                            <input type="radio" name="RadioAbierta0"
+                                                th:id="'Opcion3' + ${preguntas.NoPregunta}"
                                                 onclick="PreguntaAbierta(0)"><span
                                                 th:utext="${preguntas.Respuesta3}"></span> <video id="" width="30%"
                                                 th:src="${preguntas.FRespuesta3}" controls></video>
-                                            <input type="radio" name="RadioAbierta0" id="RadioAbierta0"
+                                            <input type="radio" name="RadioAbierta0"
+                                                th:id="'Opcion4' + ${preguntas.NoPregunta}"
                                                 onclick="PreguntaAbierta(0)"><span
                                                 th:utext="${preguntas.Respuesta4}"></span> <video id="" width="30%"
                                                 th:src="${preguntas.FRespuesta4}" controls></video> <br>
@@ -98,41 +113,6 @@
                             </div>
 
                         </div>
-                        <!--<div id="0" class="media tm-media">
-                            <div class="media-body tm-box-5">
-                                <h2> ¿Cual es la Pregunta? </h2>
-                                <textarea name="txtPregunta0" id="txtPregunta0" cols="30" rows="2"
-                                    placeholder="Pregunta sin titulo"></textarea>
-                                <input type="file" name="FPregunta0" id="FPregunta0" accept="video/*"><br>
-                                <ul>
-                                    <li>
-                                        <input type="radio" name="RadioAbierta0" id="RadioAbierta0"
-                                            onclick="PreguntaAbierta(0)">Abierta
-                                    </li>
-                                    <li>
-                                        <input type="radio" name="RadioCerrada0" id="RadioCerrada0"
-                                            onclick="PreguntaCerrada(0)">Cerrada
-                                    </li>
-                                </ul>
-
-                                <div id="TiposPreguntas0">
-
-                                </div>
-                                <div id="BotonesPreguntas0" class="media-body tm-box-5-1">
-
-                                    <ul>
-                                        <li>
-                                            <button class="btn" id="btnAgregar0" type="button"
-                                                onclick="Agregar(0)">Aceptar</button>
-                                        </li>
-                                        <li>
-                                            <button class="btn" type="button" onclick="Quitar(null)">Quitar</button>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        -->
                     </div>
                 </form>
             </div>
@@ -140,7 +120,7 @@
                 <ul>
                     <li>
                         <button th:data-nombre="${Nombre}" class="btn" type="button"
-                            onclick="GuardarExamen(this.getAttribute('data-nombre'))">Confirmar</button>
+                            onclick="GuardarExamen(this.getAttribute('data-nombre'))">Enviar</button>
                     </li>
                     <li>
                         <button class="btn" type="button" onclick="CancelarExamen()">Cancelar</button>
