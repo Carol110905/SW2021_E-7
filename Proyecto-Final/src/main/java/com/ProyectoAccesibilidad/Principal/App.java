@@ -185,7 +185,26 @@ public class App {
             System.out.println(m.examenCreado(nombre));
             return null;
         });
-        post("/guardarRespuestas", (req, res)->{
+        post("/guardarRespuestas", (req, res) -> {
+            req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
+            int NoPreguntas = Integer
+                    .parseInt(convertInputStreamToString(req.raw().getPart("NoPreguntas").getInputStream()));
+            String nombreExamen = convertInputStreamToString(req.raw().getPart("NombreExamen").getInputStream());
+            String nombreAlumno = convertInputStreamToString(req.raw().getPart("NombreAlumno").getInputStream());
+            nombreExamen += " " + nombreAlumno;
+            for (int i = 0; i < NoPreguntas; i++) {
+                String TipoPregunta = convertInputStreamToString(req.raw().getPart("Tipo" + i).getInputStream());
+                if (TipoPregunta.equals("Abierta")) {
+                    String RespuestaPregunta = convertInputStreamToString(req.raw().getPart("RespuestaPregunta"+i).getInputStream());
+                    String fileName = "FRespuestaPregunta" + i;
+                    String fileOpcion3 = guardarVideo(req, fileName, nombreExamen);
+                }
+                if(TipoPregunta.equals("Cerradas")){
+                    for(int j=1;j<=4;j++){
+                        String RespuestaPregunta = convertInputStreamToString(req.raw().getPart("RespuestaPregunta"+i).getInputStream());
+                    }
+                }
+            }
 
             return null;
         });
@@ -193,13 +212,15 @@ public class App {
 
             File uploadDir = new File("upload");
             uploadDir.mkdir(); // create the upload directory if it doesn't exist
-    
+
             staticFiles.externalLocation("upload");
             Path tempFile = Files.createTempFile(uploadDir.toPath(), "", "");
 
             req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
 
-            try (InputStream input = req.raw().getPart("videoGrabado").getInputStream()) { // getPart needs to use same "name" as input field in form
+            try (InputStream input = req.raw().getPart("videoGrabado").getInputStream()) { // getPart needs to use same
+                                                                                           // "name" as input field in
+                                                                                           // form
                 Files.copy(input, tempFile, StandardCopyOption.REPLACE_EXISTING);
             }
 
@@ -211,7 +232,8 @@ public class App {
     }
 
     private static void logInfo2(Request req, Path tempFile) throws IOException, ServletException {
-        System.out.println("Uploaded file '" + getFileName2(req.raw().getPart("uploaded_file")) + "' saved as '" + tempFile.toAbsolutePath() + "'");
+        System.out.println("Uploaded file '" + getFileName2(req.raw().getPart("uploaded_file")) + "' saved as '"
+                + tempFile.toAbsolutePath() + "'");
     }
 
     private static String getFileName2(Part part) {
@@ -227,6 +249,7 @@ public class App {
         try {
             req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
             Part uf = req.raw().getPart(fileName);
+            System.out.println(uf);
             System.out.println(uf);
 
             File uploadDir = new File(

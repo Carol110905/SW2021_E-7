@@ -84,17 +84,10 @@ function GuardarRespuestas(nombre) {
       }
       if(document.getElementById("Tipo-"+i).value == "Cerradas"){
           formData.append("Tipo"+i,"Cerrada");
-          if(document.getElementById("Opcion1"+i).checked){
-            formData.append("RespuestaPregunta-"+i, "opcion1");
-          }
-          if(document.getElementById("Opcion2"+i).checked){
-            formData.append("RespuestaPregunta-"+i, "opcion2");
-          }
-          if(document.getElementById("Opcion3"+i).checked){
-            formData.append("RespuestaPregunta-"+i, "opcion3");
-          }
-          if(document.getElementById("Opcion4"+i).checked){
-            formData.append("RespuestaPregunta-"+i, "opcion4");
+          for(var j=1; j<=4; j++){
+            if(document.getElementById("Opcion"+j+""+i).checked){
+              formData.append("RespuestaPregunta-"+i, "opcion"+j);
+            }
           }
       }
   }
@@ -112,6 +105,8 @@ function GuardarRespuestas(nombre) {
   .catch(function (error) {
       console.log(error);
   });
+
+  setTimeout("history.back(1)", 3000);
 }
 
 function nombreTxtArea(name){

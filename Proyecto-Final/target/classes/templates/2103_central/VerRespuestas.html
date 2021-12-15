@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="referrer" content="never">
+    <title>Resolucion Examen</title>
+    <!--
+
+    Template 2103 Central
+
+	http://www.tooplate.com/view/2103-central
+
+    -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
+    <!-- Google web font "Open Sans" -->
+    <link rel="stylesheet" href="/templates/2103_central/font-awesome-4.5.0/css/font-awesome.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/templates/2103_central/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/templates/2103_central/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="/templates/2103_central/slick/slick-theme.css" />
+    <link rel="stylesheet" href="/templates/2103_central/css/tooplate-styles.css">
+    <!-- tooplate style -->
+
+    <script>
+        var renderPage = true;
+
+        if (navigator.userAgent.indexOf('MSIE') !== -1
+            || navigator.appVersion.indexOf('Trident/') > 0) {
+            /* Microsoft Internet Explorer detected in. */
+            alert("Please view this in a modern browser such as Chrome or Microsoft Edge.");
+            renderPage = false;
+        }
+    </script>
+
+</head>
+
+<body>
+    <!-- Loader -->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
+    <div class="container">
+        <section class="tm-section-head" id="top">
+            <header id="header" class="text-center tm-text-gray">
+                <h1>Materia <span th:utext="${Nombre}">Desconocida</span> </h1>
+                <p>Resolucion De Examen</p>
+            </header>
+            <input type="hidden" id="NoPreguntas" th:value="${NoPreguntas}">
+            <input type="hidden" id="NombreExamen" th:value="${Nombre}">
+            <input type="hidden" id="NombreAlumno" th:value="${NombreAlumno}">
+        </section>
+
+        <section class="tm-section-5" id="tm-section-5">
+            <div class="row">
+
+                <form id="InformacionExamen" name="InformacionExamen" action="">
+                    <div id="Preguntas" class="Preguntas">
+                        <!---->
+                        <div th:each="preguntas : ${preguntas}" class="media tm-media">
+                            <div div class="media-body tm-box-5">
+                                <h2><span th:utext="${preguntas.Pregunta}"></span> </h2>
+                                <h2><span th:src="${preguntas.FPregunta}"></span> </h2>
+                                <div class="media-body tm-box-5" th:switch="${preguntas.TipoPregunta}">
+                                    <div th:case="Abierta" class="media-body tm-box-5">
+                                        <input type="hidden" th:id="'Tipo-'+${preguntas.NoPregunta}" value="Abierta">
+                                        <textarea name="" th:id="'txtRespuestaAbierta-'+${preguntas.NoPregunta}"
+                                            cols="30" rows="2" placeholder="Pregunta sin titulo"></textarea>
+
+                                        <video id="" width="30%" controls="controls" th:src="${preguntas.FPregunta}">
+
+                                        </video>
+
+                                        <div>
+                                            <video th:id="'video-'+${preguntas.NoPregunta}" width="20%"></video>
+                                            <div th:id="'xxx-'+${preguntas.NoPregunta}"+></div>
+                                            <button type="button"
+                                                th:id="'btnComenzarGrabacion-' + ${preguntas.NoPregunta}"
+                                                th:data-Nu = "${preguntas.NoPregunta}" onclick="comenzarAGrabar(this.getAttribute('data-Nu'))"
+                                                >Grabar</button>
+                                            <button type="button"
+                                                th:id="'btnDetenerGrabacion-' + ${preguntas.NoPregunta}"
+                                                th:data-Nu = "${preguntas.NoPregunta}" th:data-No = "${Nombre}"
+                                                onclick="detenerGrabacion(this.getAttribute('data-Nu'))"
+                                                >Detener</button>
+                                            
+                                        </div>
+
+
+                                    </div>
+                                    <div th:case="Cerrada" class="media-body tm-box-5">
+                                        <input type="hidden" th:id="'Tipo-'+${preguntas.NoPregunta}" value="Cerradas">
+                                        <div id="Opciones">
+                                            <video id="" width="30%" th:src="${preguntas.FPregunta}"
+                                                controls></video><br>
+                                            <input type="radio" name="RadioAbierta0"
+                                                th:id="'Opcion1' + ${preguntas.NoPregunta}">
+                                                <span th:utext="${preguntas.Respuesta1}"></span> <video id="" width="30%"
+                                                th:src="${preguntas.FRespuesta1}" controls></video>
+                                            <input type="radio" name="RadioAbierta0"
+                                                th:id="'Opcion2' + ${preguntas.NoPregunta}">
+                                                <span th:utext="${preguntas.Respuesta2}"></span> <video id="" width="30%"
+                                                th:src="${preguntas.FRespuesta2}" controls></video> <br>
+                                            <input type="radio" name="RadioAbierta0"
+                                                th:id="'Opcion3' + ${preguntas.NoPregunta}">
+                                                <span th:utext="${preguntas.Respuesta3}"></span> <video id="" width="30%"
+                                                th:src="${preguntas.FRespuesta3}" controls></video>
+                                            <input type="radio" name="RadioAbierta0"
+                                                th:id="'Opcion4' + ${preguntas.NoPregunta}">
+                                                <span th:utext="${preguntas.Respuesta4}"></span> <video id="" width="30%"
+                                                th:src="${preguntas.FRespuesta4}" controls></video> <br>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="media-body tm-box-5-2" id="BotonesConfirmar">
+                <ul>
+                    <li>
+                        <button th:data-nombre="${Nombre}" class="btn" type="button"
+                            onclick="GuardarRespuestas(this.getAttribute('data-nombre'))">Enviar</button>
+                    </li>
+                    <li>
+                        <button class="btn" type="button" onclick="CancelarExamen()">Cancelar</button>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <footer class="mt-5">
+            <p class="text-center">Fue una friega hacer esto, estamos cansados... xd</p>
+        </footer>
+    </div>
+
+    <!-- load JS files -->
+    <script type="text/javascript" src="/templates/2103_central/js/jquery-1.11.3.min.js"></script>
+    <script src="/templates/2103_central/js/popper.min.js"></script>
+    <!-- https://popper.js.org/ -->
+    <script src="/templates/2103_central/js/bootstrap.min.js"></script>
+    <!-- https://getbootstrap.com/ -->
+    <script type="text/javascript" src="/templates/2103_central/slick/slick.min.js"></script>
+    <!-- Slick Carousel -->
+
+
+    <script>
+        function setCarousel() {
+            var slider = $('.tm-img-slider');
+
+            if (slider.hasClass('slick-initialized')) {
+                slider.slick('destroy');
+            }
+
+            if ($(window).width() > 991) {
+                // Slick carousel
+                slider.slick({
+                    autoplay: true,
+                    fade: true,
+                    speed: 800,
+                    infinite: true,
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                });
+            } else {
+                slider.slick({
+                    autoplay: true,
+                    fade: true,
+                    speed: 800,
+                    infinite: true,
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                });
+            }
+        }
+
+        $(document).ready(function () {
+            if (renderPage) {
+                $('body').addClass('loaded');
+            }
+
+            setCarousel();
+
+            $(window).resize(function () {
+                setCarousel();
+            });
+
+            // Close menu after link click
+            $('.nav-link').click(function () {
+                $('#mainNav').removeClass('show');
+            });
+
+            // https://css-tricks.com/snippets/jquery/smooth-scrolling/
+            // Select all links with hashes
+            $('a[href*="#"]')
+                // Remove links that don't actually link to anything
+                .not('[href="#"]')
+                .not('[href="#0"]')
+                .click(function (event) {
+                    // On-page links
+                    if (
+                        location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
+                        &&
+                        location.hostname == this.hostname
+                    ) {
+                        // Figure out element to scroll to
+                        var target = $(this.hash);
+                        target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                        // Does a scroll target exist?
+                        if (target.length) {
+                            // Only prevent default if animation is actually gonna happen
+                            event.preventDefault();
+                            $('html, body').animate({
+                                scrollTop: target.offset().top + 1
+                            }, 1000, function () {
+                                // Callback after animation
+                                // Must change focus!
+                                var $target = $(target);
+                                $target.focus();
+                                if ($target.is(":focus")) { // Checking if the target was focused
+                                    return false;
+                                } else {
+                                    $target.attr('tabindex', '-1'); // Adding tabindex for elements not focusable
+                                    $target.focus(); // Set focus again
+                                };
+                            });
+                        }
+                    }
+                });
+        });
+    </script>
+
+
+</body>
+
+<script type="text/javascript" src="/templates/2103_central/js/ContestarExamen.js"> </script>
+<script type="text/javascript" src="/templates/2103_central/js/Camara.js"> </script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</html>

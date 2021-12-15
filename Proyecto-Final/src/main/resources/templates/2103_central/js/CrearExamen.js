@@ -165,6 +165,7 @@ function GuardarExamen(Nombre) {
     .catch(function (error) {
         console.log(error);
     });
+    setTimeout("history.back(1)", 3000);
 }
 
 function nombreTxtArea(name){
