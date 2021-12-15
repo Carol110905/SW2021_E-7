@@ -38,7 +38,7 @@ public class App {
     public static void main(String[] args) {
         MateriaDAO materiasd = new MateriaDAO();
         
-        port(1234);
+        port(getHerokuAssignedPort());
         staticFiles.location("/");
 
         get("/", (rq, rs) -> {
@@ -318,5 +318,13 @@ public class App {
 
     private static String convertInputStreamToString(InputStream is) throws IOException {
         return IOUtils.toString(is, StandardCharsets.UTF_8);
+    }
+
+    static int getHerokuAssignedPort() {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null) {
+            return Integer.parseInt(processBuilder.environment().get("PORT"));
+        }
+        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
     }
 }
