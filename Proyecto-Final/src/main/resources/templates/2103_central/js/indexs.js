@@ -1,4 +1,4 @@
 function iniciarExamen(nombre){
-    alert(nombre);
+    alert("Estas Apunto de inciar el examen de: " + nombre);
 }
 

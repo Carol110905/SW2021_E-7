@@ -95,19 +95,22 @@ function GuardarRespuestas(nombre) {
 
   axios({
       method: 'post',
-      url: 'http://localhost:1234/guardarRespuestas',
+      url: 'https://accesibilidad-proyecto-jcm.herokuapp.com/guardarRespuestas',
       data: formData,
       headers: {'Content-Type': 'multipart/form-data'}
   })
   .then(function (response) {
       console.log(response);
+      window.history.back(-1);
   })
   .catch(function (error) {
       console.log(error);
   });
-
+  
 }
-
+function CancelarExamen(){
+  window.history.back(-1);
+}
 function nombreTxtArea(name){
   var txtPregunta = name;
   return document.getElementById(txtPregunta).value;

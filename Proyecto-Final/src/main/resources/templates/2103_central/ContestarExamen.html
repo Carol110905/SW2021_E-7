@@ -77,7 +77,7 @@
 
                                         <div>
                                             <video th:id="'video-'+${preguntas.NoPregunta}" width="20%"></video>
-                                            <div th:id="'xxx-'+${preguntas.NoPregunta}"+></div>
+                                            <div th:id="'xxx-'+${preguntas.NoPregunta}" class="media-body tm-box-5-1"></div>
                                             <button type="button"
                                                 th:id="'btnComenzarGrabacion-' + ${preguntas.NoPregunta}"
                                                 th:data-Nu = "${preguntas.NoPregunta}" onclick="comenzarAGrabar(this.getAttribute('data-Nu'))"

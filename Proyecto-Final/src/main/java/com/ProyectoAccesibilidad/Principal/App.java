@@ -38,7 +38,6 @@ public class App {
     public static void main(String[] args) {
         MateriaDAO materiasd = new MateriaDAO();
         materiasd.reiniciarExamen();
-        
         port(getHerokuAssignedPort());
         staticFiles.location("/");
 
@@ -178,7 +177,6 @@ public class App {
             String nombre = convertInputStreamToString(req.raw().getPart("Examen").getInputStream());
 
             for (int i = 0; i < NoPreguntas; i++) {
-                System.out.println(NoPreguntas);
                 String Pregunta = convertInputStreamToString(req.raw().getPart("Pregunta" + i).getInputStream());
                 String fileName = "FilePregunta" + i;
                 String filePregunta = guardarVideo(req, fileName, nombre);
@@ -219,7 +217,7 @@ public class App {
             }
             MateriaDAO m = new MateriaDAO();
             m.examenCreado(nombre);
-            return null;
+            return "Listo";
         });
         post("/guardarRespuestas", (req, res) -> {
             req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
@@ -248,7 +246,7 @@ public class App {
                 }
             }
 
-            return null;
+            return "Listo";
         });
         post("/guardarGrabacion", (req, res) -> {
 
@@ -292,8 +290,7 @@ public class App {
             req.attribute("org.eclipse.jetty.multipartConfig", new MultipartConfigElement("/temp"));
             Part uf = req.raw().getPart(fileName);
 
-            File uploadDir = new File(
-                    "Proyecto Accesibilidad\\SW2021_E-7\\Proyecto-Final\\src\\main\\resources\\upload\\");
+            File uploadDir = new File("upload");
             uploadDir.mkdir();
             String nombredoc = materia + " " + uf.getName();
             Path tempFile = Files.createTempFile(uploadDir.toPath(), nombredoc, ".mp4");
@@ -303,8 +300,7 @@ public class App {
             }
 
             File file = logInfo(req, tempFile, uf);
-            File fileRename = new File(
-                    "Proyecto Accesibilidad\\SW2021_E-7\\Proyecto-Final\\src\\main\\resources\\upload\\" + nombredoc
+            File fileRename = new File("upload/" + nombredoc
                             + ".mp4");
             file.renameTo(fileRename);
             return "upload/" + fileRename.getName();
