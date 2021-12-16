@@ -37,6 +37,7 @@ public class App {
 
     public static void main(String[] args) {
         MateriaDAO materiasd = new MateriaDAO();
+        materiasd.reiniciarExamen();
         
         port(getHerokuAssignedPort());
         staticFiles.location("/");
@@ -177,6 +178,7 @@ public class App {
             String nombre = convertInputStreamToString(req.raw().getPart("Examen").getInputStream());
 
             for (int i = 0; i < NoPreguntas; i++) {
+                System.out.println(NoPreguntas);
                 String Pregunta = convertInputStreamToString(req.raw().getPart("Pregunta" + i).getInputStream());
                 String fileName = "FilePregunta" + i;
                 String filePregunta = guardarVideo(req, fileName, nombre);
@@ -216,6 +218,7 @@ public class App {
 
             }
             MateriaDAO m = new MateriaDAO();
+            m.examenCreado(nombre);
             return null;
         });
         post("/guardarRespuestas", (req, res) -> {
@@ -325,6 +328,6 @@ public class App {
         if (processBuilder.environment().get("PORT") != null) {
             return Integer.parseInt(processBuilder.environment().get("PORT"));
         }
-        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
+        return 1234; //return default port if heroku-port isn't set (i.e. on localhost)
     }
 }
