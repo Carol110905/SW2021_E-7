@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Materias</title>
+    <!--
+
+    Template 2103 Central
+
+	http://www.tooplate.com/view/2103-central
+
+    -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400">
+    <!-- Google web font "Open Sans" -->
+    <link rel="stylesheet" href="/templates/2103_central/font-awesome-4.5.0/css/font-awesome.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/templates/2103_central/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="/templates/2103_central/css/tooplate-style.css">
+    <!-- tooplate style -->
+
+    <script>
+        
+        var renderPage = true;
+        var NoMateria = 1;
+        if (navigator.userAgent.indexOf('MSIE') !== -1
+            || navigator.appVersion.indexOf('Trident/') > 0) {
+            /* Microsoft Internet Explorer detected in. */
+            alert("Please view this in a modern browser such as Chrome or Microsoft Edge.");
+            renderPage = false;
+        }
+
+        function MostrarMaterias() {
+            alert("Hola");
+        }
+
+        
+    </script>
+
+</head>
+
+<body>
+    <!-- Loader -->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
+    <div class="container">
+        <input type="hidden" id="refreshed" value="no">
+        <section class="tm-section-head" id="top">
+            <header id="header" class="text-center tm-text-gray">
+                <h1>EMINUS</h1>
+                <p> <span th:text="${Rol}"> Rol</span></p>
+                <p> <span th:text="${Nombre}">Anonimo</span> </p>
+            </header>
+        </section>
+
+
+
+
+
+        <section class="tm-section-4 tm-section-mb" id="tm-section-4">
+            <div class="row">
+
+            </div>
+        </section>
+
+        <section class="tm-section-5" id="tm-section-5">
+
+            <div class="row">
+                <div class="col-lg-4 col-md-12 col-sm-12">
+                    <div class="image fit">
+                        <img src="/templates/2103_central/img/imagen2.jpg" class="img-fluid">
+                    </div>
+                </div>
+
+                <div id="divMaterias" class="col-lg-8 col-md-12 col-sm-12 pl-lg-0">
+                    <div th:each="materias : ${listaMaterias}" class="media tm-media">
+                        <img src="/templates/2103_central/img/sc4-img-2.jpg" class="img-responsive tm-media-img">
+                        <div class="media-body tm-box-5" th:switch="${Rol}">
+
+                            <h2> <span th:utext="${materias.Nombre}"> Examen Desconocido</span></h2>
+                            <div th:case="Profesor" class="media-body tm-box-5" id="BotonesExamen">
+                                <div th:switch="${materias.Examen}">
+
+                                    <div th:case="True">
+                                        <form action="/verRespuestas" method="get">
+                                            <div class="media-body tm-box-5">
+                                                <input type="hidden" name="materia" id="materia"
+                                                    th:value="${materias.Nombre}">
+                                                <button class="btn" title="CrearExamen" id="CrearExamen">Ver
+                                                    Respuestas</button>
+                                            </div>
+                                            <!---->
+                                        </form>
+                                    </div>
+
+                                    <div th:case="False">
+                                        <form action="/crearExamen" method="get">
+                                            <div class="media-body tm-box-5">
+                                                <input type="hidden" name="materia" id="materia"
+                                                    th:value="${materias.Nombre}">
+                                                <button class="btn" title="CrearExamen" id="CrearExamen">Crear
+                                                    Examen</button>
+                                                <!---->
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                            <form action="/iniciarExamen" method="get">
+                                <div th:case="Alumno" class="media-body tm-box-5" id="BotonesExamen">
+                                    <div th:switch="${materias.Examen}">
+                                        <div th:case="true" class="media-body tm-box-5" id="BotonesExamen">
+                                            <input type="hidden" name="materia" id="materia"
+                                                th:value="${materias.Nombre}">
+                                            <input type="hidden" name="Alumno" id="Alumno" th:value="${Nombre}">
+                                            <p>Examen Creado</p>
+                                            <button th:data-nombre="${materias.Nombre}"
+                                                onclick="iniciarExamen(this.getAttribute('data-nombre'))"
+                                                class="btn tm-btn-pad-2 float-right">Iniciar Examen</button>
+                                            <!--#tm-section-3 -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+
+        <footer class="mt-5">
+            <p class="text-center">Fue una friega hacer esto, estamos cansados... xd</p>
+        </footer>
+    </div>
+
+    <!-- load JS files -->
+    <script type="text/javascript" src="/templates/2103_central/js/jquery-1.11.3.min.js"></script>
+    <script src="/templates/2103_central/js/popper.min.js"></script>
+    <!-- https://popper.js.org/ -->
+    <script src="/templates/2103_central/js/bootstrap.min.js"></script>
+    <!-- https://getbootstrap.com/ -->
+    <script type="text/javascript" src="/templates/2103_central/slick/slick.min.js"></script>
+    <!-- Slick Carousel -->
+
+
+    <script>
+        function setCarousel() {
+            var slider = $('.tm-img-slider');
+
+            if (slider.hasClass('slick-initialized')) {
+                slider.slick('destroy');
+            }
+
+            if ($(window).width() > 991) {
+                // Slick carousel
+                slider.slick({
+                    autoplay: true,
+                    fade: true,
+                    speed: 800,
+                    infinite: true,
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                });
+            } else {
+                slider.slick({
+                    autoplay: true,
+                    fade: true,
+                    speed: 800,
+                    infinite: true,
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                });
+            }
+        }
+
+
+        $(document).ready(function () {
+            if (renderPage) {
+                $('body').addClass('loaded');
+            }
+
+            setCarousel();
+
+            $(window).resize(function () {
+                setCarousel();
+            });
+
+            // Close menu after link click
+            $('.nav-link').click(function () {
+                $('#mainNav').removeClass('show');
+            });
+
+            // https://css-tricks.com/snippets/jquery/smooth-scrolling/
+            // Select all links with hashes
+            $('a[href*="#"]')
+                // Remove links that don't actually link to anything
+                .not('[href="#"]')
+                .not('[href="#0"]')
+                .click(function (event) {
+                    // On-page links
+                    if (
+                        location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '')
+                        &&
+                        location.hostname == this.hostname
+                    ) {
+                        // Figure out element to scroll to
+                        var target = $(this.hash);
+                        target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                        // Does a scroll target exist?
+                        if (target.length) {
+                            // Only prevent default if animation is actually gonna happen
+                            event.preventDefault();
+                            $('html, body').animate({
+                                scrollTop: target.offset().top + 1
+                            }, 1000, function () {
+                                // Callback after animation
+                                // Must change focus!
+                                var $target = $(target);
+                                $target.focus();
+                                if ($target.is(":focus")) { // Checking if the target was focused
+                                    return false;
+                                } else {
+                                    $target.attr('tabindex', '-1'); // Adding tabindex for elements not focusable
+                                    $target.focus(); // Set focus again
+                                };
+                            });
+                        }
+                    }
+                });
+        });
+    </script>
+    <script src="templates/2103_central/js/indexs.js"> </script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="utf-8">
+
+    <title> Login </title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+
+    <!-- Link hacia el archivo de estilos css -->
+    <link rel="stylesheet" href="css/login.css">
+
+</head>
+
+<body>
+    <div id="contenedor">
+        <div id="contenedorcentrado">
+            <div id="login">
+                <form id="loginform" action="/validar" method="get">
+                    <label for="usuario">Usuario</label>
+                    <input id="usuario" type="text" name="usuario" placeholder="Usuario" required>
+
+                    <label for="password">Contraseña</label>
+                    <input id="password" type="password" placeholder="Contraseña" name="password" required>
+
+                    <button title="Ingresar" id="Ingresar">Login</button>
+                </form>
+
+            </div>
+            <div id="derecho">
+                <div class="titulo">
+                    Bienvenido
+                </div>
+                <hr>
+                <div class="pie-form">
+                    <a href="">Restaurar Constraseña</a>
+                    <a href="">¿No tienes Cuenta? Registrate</a>
+                    <hr>
+                    <a href="">
+                        << Volver</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script src="login.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+</html>
