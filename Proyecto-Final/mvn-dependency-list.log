@@ -1,0 +1,32 @@
+
+The following files have been resolved:
+   org.eclipse.jetty:jetty-http:jar:9.4.31.v20200723:compile
+   org.eclipse.jetty:jetty-security:jar:9.4.31.v20200723:compile
+   org.slf4j:slf4j-simple:jar:1.7.21:compile
+   com.google.protobuf:protobuf-java:jar:3.11.4:compile
+   org.javassist:javassist:jar:3.20.0-GA:compile
+   org.eclipse.jetty:jetty-io:jar:9.4.31.v20200723:compile
+   org.eclipse.jetty:jetty-webapp:jar:9.4.31.v20200723:compile
+   org.attoparser:attoparser:jar:2.0.5.RELEASE:compile
+   org.eclipse.jetty:jetty-server:jar:9.4.31.v20200723:compile
+   org.eclipse.jetty.websocket:websocket-client:jar:9.4.31.v20200723:compile
+   org.eclipse.jetty.websocket:websocket-common:jar:9.4.31.v20200723:compile
+   org.eclipse.jetty:jetty-servlet:jar:9.4.31.v20200723:compile
+   org.unbescape:unbescape:jar:1.1.6.RELEASE:compile
+   org.eclipse.jetty.websocket:websocket-servlet:jar:9.4.31.v20200723:compile
+   ognl:ognl:jar:3.1.12:compile
+   org.eclipse.jetty:jetty-xml:jar:9.4.31.v20200723:compile
+   com.google.code.gson:gson:jar:2.8.9:compile
+   org.eclipse.jetty.websocket:websocket-api:jar:9.4.31.v20200723:compile
+   org.eclipse.jetty:jetty-client:jar:9.4.31.v20200723:compile
+   javax.servlet:javax.servlet-api:jar:3.1.0:compile
+   mysql:mysql-connector-java:jar:8.0.27:compile
+   org.eclipse.jetty.websocket:websocket-server:jar:9.4.31.v20200723:compile
+   com.sparkjava:spark-debug-tools:jar:0.5:compile
+   org.slf4j:slf4j-api:jar:1.7.25:compile
+   com.sparkjava:spark-core:jar:2.9.3:compile
+   org.thymeleaf:thymeleaf:jar:3.0.11.RELEASE:compile
+   commons-io:commons-io:jar:2.7:compile
+   org.eclipse.jetty:jetty-util:jar:9.4.31.v20200723:compile
+   org.thymeleaf.extras:thymeleaf-extras-java8time:jar:3.0.4.RELEASE:compile
+
